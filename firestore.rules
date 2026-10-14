@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserClinicId() {
+      return request.auth.token.clinicId;
+    }
+
+    function getUserRole() {
+      return request.auth.token.role;
+    }
+
+    function isMemberOf(clinicId) {
+      return isAuthenticated() && (getUserClinicId() == clinicId || request.auth.token.admin == true);
+    }
+
+    function isDentist(clinicId) {
+      return isMemberOf(clinicId) && getUserRole() == 'dentist';
+    }
+
+    function isAssistant(clinicId) {
+      return isMemberOf(clinicId) && getUserRole() == 'assistant';
+    }
+
+    function isSecretary(clinicId) {
+      return isMemberOf(clinicId) && getUserRole() == 'secretary';
+    }
+
+    function isClinicalStaff(clinicId) {
+      return isDentist(clinicId) || isAssistant(clinicId);
+    }
+
+    function isBillingStaff(clinicId) {
+      return isDentist(clinicId) || isSecretary(clinicId);
+    }
+
+    // Root users collection (for initial login routing)
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || request.auth.token.role == 'dentist');
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Clinic root & subcollections
+    match /clinics/{clinicId} {
+      allow read: if isMemberOf(clinicId);
+      allow write: if isDentist(clinicId);
+
+      // Clinic users / staff
+      match /users/{userId} {
+        allow read: if isMemberOf(clinicId);
+        allow write: if isDentist(clinicId);
+      }
+
+      // Patients collection
+      match /patients/{patientId} {
+        // Secretary, Assistant, Dentist can read basic patient info
+        allow read: if isMemberOf(clinicId);
+        allow create, update: if isMemberOf(clinicId);
+        // Only dentist can delete a patient file (CNDP right to erasure with clinical accountability)
+        allow delete: if isDentist(clinicId);
+      }
+
+      // Tooth charts (Odontogram) - restricted to clinical staff
+      match /toothCharts/{chartId} {
+        allow read, write: if isClinicalStaff(clinicId);
+        // Secretary cannot access dental charts
+      }
+
+      // Treatment plans & quotes - restricted to clinical staff
+      match /treatmentPlans/{planId} {
+        allow read, write: if isClinicalStaff(clinicId);
+      }
+
+      // Appointments
+      match /appointments/{appointmentId} {
+        allow read, create, update: if isMemberOf(clinicId);
+        allow delete: if isDentist(clinicId) || isSecretary(clinicId);
+      }
+
+      // Procedures catalog
+      match /procedures/{procedureId} {
+        allow read: if isMemberOf(clinicId);
+        allow write: if isDentist(clinicId);
+      }
+
+      // Invoices & Payments
+      match /invoices/{invoiceId} {
+        allow read: if isMemberOf(clinicId);
+        allow write: if isBillingStaff(clinicId);
+      }
+
+      match /payments/{paymentId} {
+        allow read: if isMemberOf(clinicId);
+        allow write: if isBillingStaff(clinicId);
+      }
+
+      // Daily Cash Closings & Expenses
+      match /cashClosings/{closingId} {
+        allow read: if isBillingStaff(clinicId);
+        allow write: if isBillingStaff(clinicId);
+      }
+
+      match /expenses/{expenseId} {
+        allow read: if isBillingStaff(clinicId);
+        allow write: if isBillingStaff(clinicId);
+      }
+
+      // Medical Documents (Prescriptions, Certificates, Radios metadata)
+      match /documents/{documentId} {
+        allow read: if isClinicalStaff(clinicId);
+        allow create, update: if isClinicalStaff(clinicId);
+        allow delete: if isDentist(clinicId);
+      }
+
+      // Audit logs - Append-only, never modifiable by client, readable only by dentist
+      match /auditLogs/{logId} {
+        allow read: if isDentist(clinicId);
+        // Created client-side with strict validation or through Cloud Functions
+        allow create: if isMemberOf(clinicId) && request.resource.data.performedBy == request.auth.uid;
+        allow update, delete: if false; // Immutable!
+      }
+    }
+  }
+}

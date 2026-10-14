@@ -1,0 +1,157 @@
+{
+  "appName": "DentaMaroc",
+  "tagline": "Gestion de cabinet dentaire au Maroc",
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "agenda": "Agenda & RDV",
+    "patients": "Dossiers Patients",
+    "treatments": "Actes & Devis",
+    "billing": "Facturation & Caisse",
+    "documents": "Ordonnances & Documents",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "roles": {
+    "dentist": "Chirurgien-Dentiste",
+    "assistant": "Assistante Dentaire",
+    "secretary": "Secrétaire Médicale"
+  },
+  "common": {
+    "search": "Rechercher...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "print": "Imprimer",
+    "export": "Exporter (CNDP)",
+    "filter": "Filtrer",
+    "loading": "Chargement en cours...",
+    "noData": "Aucune donnée disponible",
+    "status": "Statut",
+    "actions": "Actions",
+    "date": "Date",
+    "time": "Heure",
+    "patient": "Patient",
+    "amount": "Montant",
+    "currency": "MAD",
+    "phone": "Téléphone",
+    "email": "Email",
+    "cin": "CIN",
+    "notes": "Remarques",
+    "success": "Opération réussie",
+    "error": "Une erreur est survenue"
+  },
+  "auth": {
+    "login": "Connexion",
+    "loginTitle": "Accédez à votre cabinet",
+    "emailLabel": "Adresse Email",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "demoAccounts": "Comptes de Démonstration",
+    "loginAsDentist": "Dentiste (Admin)",
+    "loginAsAssistant": "Assistante",
+    "loginAsSecretary": "Secrétaire",
+    "logoutConfirm": "Voulez-vous vraiment vous déconnecter ?"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord du Cabinet",
+    "todayAppointments": "RDV Aujourd'hui",
+    "monthlyRevenue": "Chiffre d'Affaires du Mois",
+    "pendingBalances": "Impayés Patients",
+    "waitingRoom": "Salle d'attente",
+    "quickActions": "Actions Rapides",
+    "newAppointment": "Nouveau RDV",
+    "newPatient": "Nouveau Patient",
+    "quickPayment": "Encaisser",
+    "frequentProcedures": "Actes les plus fréquents"
+  },
+  "patients": {
+    "title": "Gestion des Patients",
+    "newPatient": "Nouveau Dossier Patient",
+    "searchPlaceholder": "Rechercher par nom, téléphone (+212) ou CIN...",
+    "identity": "État Civil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "birthDate": "Date de Naissance",
+    "gender": "Genre",
+    "male": "Homme",
+    "female": "Femme",
+    "medicalAlerts": "Alertes Médicales & Antécédents",
+    "allergies": "Allergies",
+    "conditions": "Pathologies / Traitements à risque",
+    "bloodGroup": "Groupe Sanguin",
+    "consentTitle": "Consentement Éclairé & Loi 09-08 (CNDP)",
+    "consentNotice": "Le patient consent au traitement de ses données de santé pour son suivi bucco-dentaire.",
+    "consentStatusGranted": "Consentement accordé et horodaté",
+    "consentStatusMissing": "Consentement non renseigné",
+    "tabs": {
+      "overview": "Synthèse & Antécédents",
+      "odontogram": "Odontogramme SVG",
+      "treatmentPlans": "Plans de Traitement",
+      "billing": "Factures & Règlements",
+      "documents": "Radios & Ordonnances",
+      "cndp": "Données & CNDP"
+    }
+  },
+  "agenda": {
+    "title": "Agenda & Rendez-vous",
+    "dayView": "Jour",
+    "weekView": "Semaine",
+    "allPractitioners": "Tous les praticiens",
+    "newAppointment": "Planifier un RDV",
+    "sendWhatsAppReminder": "Rappel WhatsApp",
+    "conflictAlert": "Attention : Un conflit de créneau a été détecté pour ce praticien !",
+    "status": {
+      "scheduled": "Planifié",
+      "arrived": "En salle d'attente",
+      "in_progress": "Au fauteuil",
+      "completed": "Terminé",
+      "no_show": "Absent",
+      "cancelled": "Annulé"
+    }
+  },
+  "odontogram": {
+    "title": "Odontogramme Interactif (FDI)",
+    "adultTeeth": "Denture Adulte (32 dents)",
+    "childTeeth": "Denture Enfant (20 dents)",
+    "selectedTooth": "Dent sélectionnée",
+    "states": {
+      "healthy": "Saine",
+      "caries": "Carie active",
+      "filling": "Obturation",
+      "crown": "Couronne",
+      "missing": "Absente",
+      "implant": "Implant",
+      "root_canal": "Dévitalisée (Endo)",
+      "bridge": "Pilier / Pont",
+      "extraction_indicated": "À extraire"
+    },
+    "surfaces": {
+      "occlusal": "Occlusale / Incisive",
+      "mesial": "Mésiale",
+      "distal": "Distale",
+      "vestibular": "Vestibulaire",
+      "lingual": "Linguale / Palatine"
+    }
+  },
+  "billing": {
+    "title": "Facturation & Caisse",
+    "newInvoice": "Nouvelle Facture",
+    "recordPayment": "Encaisser un règlement",
+    "dailyClosing": "Clôture Journalière de Caisse",
+    "expenses": "Dépenses du cabinet",
+    "methods": {
+      "cash": "Espèces",
+      "card": "Carte Bancaire (TPE)",
+      "check": "Chèque",
+      "transfer": "Virement bancaire"
+    },
+    "status": {
+      "paid": "Payée",
+      "partially_paid": "Paiement partiel",
+      "unpaid": "Impayée",
+      "cancelled": "Annulée"
+    }
+  }
+}

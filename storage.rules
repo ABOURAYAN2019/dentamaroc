@@ -1,0 +1,31 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isMemberOf(clinicId) {
+      return isAuthenticated() && (request.auth.token.clinicId == clinicId || request.auth.token.admin == true);
+    }
+
+    function isClinicalStaff(clinicId) {
+      return isMemberOf(clinicId) && (request.auth.token.role == 'dentist' || request.auth.token.role == 'assistant');
+    }
+
+    // Clinic patient files: radios, photos, signed consents
+    match /clinics/{clinicId}/patients/{patientId}/{allPaths=**} {
+      allow read: if isClinicalStaff(clinicId);
+      allow write: if isClinicalStaff(clinicId)
+                   && request.resource.size < 30 * 1024 * 1024 // 30MB max
+                   && (request.resource.contentType.matches('image/.*') 
+                       || request.resource.contentType == 'application/pdf');
+    }
+
+    // Clinic logo & public assets
+    match /clinics/{clinicId}/branding/{fileName} {
+      allow read: if isMemberOf(clinicId);
+      allow write: if isMemberOf(clinicId) && request.auth.token.role == 'dentist';
+    }
+  }
+}

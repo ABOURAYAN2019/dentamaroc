@@ -1,0 +1,157 @@
+{
+  "appName": "دينتا ماروك",
+  "tagline": "نظام تدبير عيادة طب الأسنان بالمغرب",
+  "nav": {
+    "dashboard": "لوحة القيادة",
+    "agenda": "المواعيد والجدول",
+    "patients": "ملفات المرضى",
+    "treatments": "العلاجات والتقديرات",
+    "billing": "الفواتير والصندوق",
+    "documents": "الوصفات والوثائق",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "roles": {
+    "dentist": "طبيب أسنان جراح",
+    "assistant": "مساعدة طبيب الأسنان",
+    "secretary": "كاتبة طبية"
+  },
+  "common": {
+    "search": "بحث...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "print": "طباعة",
+    "export": "تصدير (CNDP)",
+    "filter": "تصفية",
+    "loading": "جار التحميل...",
+    "noData": "لا توجد بيانات متاحة",
+    "status": "الحالة",
+    "actions": "إجراءات",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "patient": "المريض",
+    "amount": "المبلغ",
+    "currency": "درهم",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "cin": "ب.ت.و (CIN)",
+    "notes": "ملاحظات",
+    "success": "تمت العملية بنجاح",
+    "error": "حدث خطأ"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "loginTitle": "الولوج إلى العيادة",
+    "emailLabel": "البريد الإلكتروني",
+    "passwordLabel": "كلمة المرور",
+    "submit": "دخول",
+    "demoAccounts": "حسابات تجريبية سريعة",
+    "loginAsDentist": "طبيب الأسنان (مسؤول)",
+    "loginAsAssistant": "المساعدة",
+    "loginAsSecretary": "الكاتبة",
+    "logoutConfirm": "هل تريد حقاً تسجيل الخروج؟"
+  },
+  "dashboard": {
+    "title": "لوحة قيادة العيادة",
+    "todayAppointments": "مواعيد اليوم",
+    "monthlyRevenue": "مداخيل الشهر",
+    "pendingBalances": "مستحقات المرضى",
+    "waitingRoom": "قاعة الانتظار",
+    "quickActions": "إجراءات سريعة",
+    "newAppointment": "موعد جديد",
+    "newPatient": "مريض جديد",
+    "quickPayment": "استخلاص مبلغ",
+    "frequentProcedures": "العلاجات الأكثر تكراراً"
+  },
+  "patients": {
+    "title": "إدارة المرضى",
+    "newPatient": "ملف مريض جديد",
+    "searchPlaceholder": "البحث بالاسم، الهاتف (+212) أو بطاقة التعريف الوطنية...",
+    "identity": "الحالة المدنية",
+    "firstName": "الاسم الشخصي",
+    "lastName": "الاسم العائلي",
+    "birthDate": "تاريخ الازدياد",
+    "gender": "الجنس",
+    "male": "ذكر",
+    "female": "أنثى",
+    "medicalAlerts": "التنبيهات الطبية والسوابق",
+    "allergies": "الحساسية",
+    "conditions": "الأمراض المزمنة / موانع العلاج",
+    "bloodGroup": "فصيلة الدم",
+    "consentTitle": "الموافقة المستنيرة وقانون 09-08 (CNDP)",
+    "consentNotice": "يوافق المريض على معالجة بياناته الصحية لأغراض متابعة علاج الأسنان.",
+    "consentStatusGranted": "تمت الموافقة وتوثيق التاريخ",
+    "consentStatusMissing": "الموافقة غير مسجلة",
+    "tabs": {
+      "overview": "الملخص والسوابق",
+      "odontogram": "مخطط الأسنان التفاعلي",
+      "treatmentPlans": "خطة العلاج",
+      "billing": "الفواتير والأداء",
+      "documents": "الأشعة والوصفات",
+      "cndp": "البيانات وحماية المعطيات"
+    }
+  },
+  "agenda": {
+    "title": "جدول المواعيد",
+    "dayView": "يومي",
+    "weekView": "أسبوعي",
+    "allPractitioners": "جميع الأطباء",
+    "newAppointment": "برمجة موعد",
+    "sendWhatsAppReminder": "تذكير عبر واتساب",
+    "conflictAlert": "تنبيه: يوجد تعارض في التوقيت لهذا الطبيب!",
+    "status": {
+      "scheduled": "مبرمج",
+      "arrived": "في قاعة الانتظار",
+      "in_progress": "في كرسي الفحص",
+      "completed": "انتهى",
+      "no_show": "غائب",
+      "cancelled": "ملغى"
+    }
+  },
+  "odontogram": {
+    "title": "مخطط الأسنان التفاعلي (FDI)",
+    "adultTeeth": "أسنان البالغين (32 سناً)",
+    "childTeeth": "أسنان الأطفال (20 سناً)",
+    "selectedTooth": "السن المختار",
+    "states": {
+      "healthy": "سليم",
+      "caries": "تسوس نشط",
+      "filling": "حشوة (بلومباج)",
+      "crown": "تاج (كورون)",
+      "missing": "مفقود",
+      "implant": "زرع سن",
+      "root_canal": "علاج الجذور (ديفيتاليزاسيون)",
+      "bridge": "جسر أسنان",
+      "extraction_indicated": "بحاجة للقلع"
+    },
+    "surfaces": {
+      "occlusal": "إطباقي",
+      "mesial": "إنسي",
+      "distal": "وحشي",
+      "vestibular": "دهليزي",
+      "lingual": "لساني / حنكي"
+    }
+  },
+  "billing": {
+    "title": "الفواتير والصندوق",
+    "newInvoice": "فاتورة جديدة",
+    "recordPayment": "استخلاص دفعة",
+    "dailyClosing": "إقفال الصندوق اليومي",
+    "expenses": "مصاريف العيادة",
+    "methods": {
+      "cash": "نقداً",
+      "card": "بطاقة بنكية",
+      "check": "شيك",
+      "transfer": "تحويل بنكي"
+    },
+    "status": {
+      "paid": "مؤداة بالكامل",
+      "partially_paid": "أداء جزئي",
+      "unpaid": "غير مؤداة",
+      "cancelled": "ملغاة"
+    }
+  }
+}
