@@ -29,7 +29,7 @@ export interface Clinic {
   settings: {
     currency: 'MAD';
     timezone: 'Africa/Casablanca';
-    defaultLanguage: 'fr' | 'ar';
+    defaultLanguage: 'fr' | 'ar' | 'en' | 'es';
     appointmentSlotDuration: number; // in minutes
     workHours: Array<{
       dayOfWeek: number; // 0=Sun, 1=Mon, ..., 6=Sat
@@ -281,7 +281,7 @@ export interface MedicalDocument {
   patientId: string;
   type: 'prescription' | 'medical_certificate' | 'quote' | 'xray' | 'photo';
   title: string;
-  language: 'fr' | 'ar';
+  language: 'fr' | 'ar' | 'en' | 'es';
   fileUrl: string;
   storagePath: string;
   metadata?: {

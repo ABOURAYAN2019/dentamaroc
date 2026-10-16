@@ -1,7 +1,15 @@
 {
   "appName": "دينتا ماروك",
-  "tagline": "نظام تدبير عيادة طب الأسنان بالمغرب",
+  "tagline": "نظام طبي لتدبير عيادات طب الأسنان",
+  "languages": {
+    "label": "لغة الواجهة",
+    "fr": "Français",
+    "ar": "العربية",
+    "en": "English",
+    "es": "Español"
+  },
   "nav": {
+    "mainNav": "القائمة الرئيسية",
     "dashboard": "لوحة القيادة",
     "agenda": "المواعيد والجدول",
     "patients": "ملفات المرضى",
@@ -9,12 +17,18 @@
     "billing": "الفواتير والصندوق",
     "documents": "الوصفات والوثائق",
     "settings": "الإعدادات",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "complianceNotice": "مطابق لـ {{law}} ({{authority}})"
   },
   "roles": {
+    "activeRole": "الدور الحالي:",
+    "switchRole": "التبديل إلى {{role}}",
     "dentist": "طبيب أسنان جراح",
     "assistant": "مساعدة طبيب الأسنان",
-    "secretary": "كاتبة طبية"
+    "secretary": "كاتبة طبية",
+    "dentistShort": "الطبيب",
+    "assistantShort": "المساعدة",
+    "secretaryShort": "الكاتبة"
   },
   "common": {
     "search": "بحث...",
@@ -40,36 +54,56 @@
     "cin": "ب.ت.و (CIN)",
     "notes": "ملاحظات",
     "success": "تمت العملية بنجاح",
-    "error": "حدث خطأ"
+    "error": "حدث خطأ",
+    "activeAccount": "حساب نشط"
   },
   "auth": {
     "login": "تسجيل الدخول",
     "loginTitle": "الولوج إلى العيادة",
+    "complianceSubtitle": "مطابق لـ {{law}} ({{authority}}) • ولوج آمن حسب الدور",
     "emailLabel": "البريد الإلكتروني",
     "passwordLabel": "كلمة المرور",
     "submit": "دخول",
     "demoAccounts": "حسابات تجريبية سريعة",
     "loginAsDentist": "طبيب الأسنان (مسؤول)",
+    "dentistPerms": "صلاحيات كاملة: الملفات السريرية، CNDP، الأسعار، الوصفات",
     "loginAsAssistant": "المساعدة",
+    "assistantPerms": "الملفات، مخطط الأسنان، الأشعة، المواعيد",
     "loginAsSecretary": "الكاتبة",
-    "logoutConfirm": "هل تريد حقاً تسجيل الخروج؟"
+    "secretaryPerms": "المواعيد، الفوترة والصندوق (بدون المعطيات السريرية)",
+    "logoutConfirm": "هل تريد حقاً تسجيل الخروج؟",
+    "footerCompliance": "معطيات صحية محمية وفق توجيهات {{authority}} • العملة {{currency}}"
   },
   "dashboard": {
     "title": "لوحة قيادة العيادة",
+    "welcome": "مرحباً، {{name}} 👋",
+    "realtimeSubtitle": "وضعية العيادة مباشرة في {{city}}",
     "todayAppointments": "مواعيد اليوم",
+    "waitingCount": "{{count}} في الانتظار",
+    "inChairCount": "{{count}} في الفحص",
     "monthlyRevenue": "مداخيل الشهر",
     "pendingBalances": "مستحقات المرضى",
     "waitingRoom": "قاعة الانتظار",
+    "readyForInstall": "جاهزون للدخول",
     "quickActions": "إجراءات سريعة",
     "newAppointment": "موعد جديد",
     "newPatient": "مريض جديد",
     "quickPayment": "استخلاص مبلغ",
-    "frequentProcedures": "العلاجات الأكثر تكراراً"
+    "frequentProcedures": "العلاجات الأكثر تكراراً",
+    "pricingSubtitle": "دليل العلاجات والتعريفة ({{currency}})",
+    "todaySchedule": "برنامج اليوم ({{count}} مرضى)",
+    "todayScheduleDesc": "تتبع فوري لمسار المريض (وصل ← الفحص ← انتهى)",
+    "viewFullAgenda": "عرض الجدول الكامل ←",
+    "markArrived": "تسجيل الوصول",
+    "sendToChair": "إلى الفحص",
+    "completeVisit": "إنهاء",
+    "cndpActive": "حماية المعطيات {{authority}} مفعلة",
+    "cndpAuditDesc": "جميع عمليات الاطلاع والتعديل على الملفات الطبية مسجلة في سجل التدقيق الموثق زمنياً."
   },
   "patients": {
     "title": "إدارة المرضى",
     "newPatient": "ملف مريض جديد",
-    "searchPlaceholder": "البحث بالاسم، الهاتف (+212) أو بطاقة التعريف الوطنية...",
+    "searchPlaceholder": "البحث بالاسم، الهاتف أو بطاقة التعريف...",
     "identity": "الحالة المدنية",
     "firstName": "الاسم الشخصي",
     "lastName": "الاسم العائلي",
@@ -113,9 +147,32 @@
   },
   "odontogram": {
     "title": "مخطط الأسنان التفاعلي (FDI)",
+    "clickHint": "اضغط على السن لاختياره، أو مباشرة على السطح (الواجهة الإطباقية) لتحديده",
     "adultTeeth": "أسنان البالغين (32 سناً)",
     "childTeeth": "أسنان الأطفال (20 سناً)",
     "selectedTooth": "السن المختار",
+    "patientRight": "يمين المريض",
+    "patientLeft": "يسار المريض",
+    "maxilla": "الفك العلوي",
+    "mandible": "الفك السفلي",
+    "livePreview": "معاينة مباشرة قبل الحفظ",
+    "selectToothPrompt": "اختر سناً على المخطط",
+    "touchToothPrompt": "اضغط على سن في المخطط لإدخال التشخيص",
+    "clinicalState": "الحالة السريرية",
+    "material": "المادة المستعملة",
+    "affectedSurfaces": "الأسطح المعنية",
+    "observations": "ملاحظات / تشخيص",
+    "observationsPlaceholder": "مثال: تسوس عميق، حساسية للبرد...",
+    "saveTooth": "حفظ السن {{tooth}}",
+    "savedChanges": "تم حفظ التعديلات",
+    "lastUpdated": "آخر تحديث",
+    "updatedBy": "بواسطة {{author}}",
+    "materials": {
+      "composite": "كومبوزيت (راتنج)",
+      "amalgam": "أملغم",
+      "ceramic": "سيراميك (خزف)",
+      "metal": "معدن / ذهب"
+    },
     "states": {
       "healthy": "سليم",
       "caries": "تسوس نشط",
@@ -128,12 +185,17 @@
       "extraction_indicated": "بحاجة للقلع"
     },
     "surfaces": {
-      "occlusal": "إطباقي",
+      "occlusal": "إطباقي / قاطع",
       "mesial": "إنسي",
       "distal": "وحشي",
       "vestibular": "دهليزي",
-      "lingual": "لساني / حنكي"
+      "lingual": "لساني / حنكي",
+      "cervical": "عنقي"
     }
+  },
+  "treatments": {
+    "title": "دليل العلاجات وعروض الأسعار",
+    "subtitle": "قائمة الإجراءات العلاجية والتعريفة الخاصة بالعيادة"
   },
   "billing": {
     "title": "الفواتير والصندوق",
@@ -153,5 +215,35 @@
       "unpaid": "غير مؤداة",
       "cancelled": "ملغاة"
     }
+  },
+  "documents": {
+    "title": "الوصفات والشواهد الطبية",
+    "subtitle": "إصدار وثائق PDF ثنائية اللغة مع ترويسة العيادة الرسمية"
+  },
+  "settings": {
+    "subtitle": "الإعدادات العامة للعيادة، صلاحيات الفريق، اللغات ومطابقة القوانين",
+    "clinicProfile": "البيانات القانونية وترويسة العيادة",
+    "clinicProfileDesc": "ستظهر هذه المعلومات في الوصفات الطبية، التقديرات والفواتير",
+    "clinicNameLabel": "اسم العيادة *",
+    "licenseLabel": "رقم التسجيل في هيئة أطباء الأسنان (INPE) *",
+    "iceLabel": "التعريف الموحد للمقاولة (ICE)",
+    "addressLabel": "العنوان",
+    "cityLabel": "المدينة",
+    "landlineLabel": "الهاتف الثابت",
+    "mobileLabel": "الهاتف المحمول (واتساب)",
+    "emailLabel": "البريد الإلكتروني الرسمي",
+    "saveChanges": "حفظ التغييرات",
+    "savedSuccess": "تم تحديث الإعدادات بنجاح",
+    "teamTitle": "المستخدمون وأدوار الفريق",
+    "teamDesc": "إدارة الصلاحيات وفق مصفوفة الأدوار",
+    "addCollaborator": "إضافة عضو للفريق",
+    "regionalSettings": "الإعدادات الإقليمية ({{city}})",
+    "mainCurrency": "العملة الأساسية",
+    "timezone": "المنطقة الزمنية",
+    "dateFormat": "صيغة التاريخ",
+    "dialCode": "رمز الهاتف الدولي",
+    "complianceTitle": "المطابقة {{law}} و {{authority}}",
+    "complianceBody": "يدمج {{appName}} مبدأ تقليص المعطيات، توثيق الموافقة المستنيرة، وحق المريض في تصدير أو حذف ملفه الطبي.",
+    "complianceCloudNote": "* استضافة سحابية في منطقة ({{region}}). قبل الاستخدام مع مرضى حقيقيين، يرجى تقديم التصريح المسبق لدى ({{authority}})."
   }
 }

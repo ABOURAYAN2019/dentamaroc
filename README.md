@@ -3,10 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](./LICENSE)
 [![TypeScript: Strict](https://img.shields.io/badge/TypeScript-5.7%20Strict-blue.svg)](./tsconfig.app.json)
 [![React: 18.3](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://react.dev)
+[![i18n: FR | AR | EN | ES](https://img.shields.io/badge/i18n-FR%20%7C%20AR%20(RTL)%20%7C%20EN%20%7C%20ES-0d9488.svg)](./src/config/i18n.ts)
 [![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Functions-ffca28.svg)](./firebase.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
-**DentaMaroc** est une solution SaaS médicale **open-source**, modulaire et entièrement configurable, conçue pour les cabinets dentaires (praticien solo ou cabinets de 1 à 3 praticiens). Pensée nativement pour le contexte marocain (**MAD**, **+212**, **Loi 09-08 / CNDP**, **Français & Arabe RTL**), elle peut être adaptée en quelques secondes à tout autre pays ou cabinet tiers grâce à sa configuration centralisée par variables d'environnement.
+**DentaMaroc** est une solution SaaS médicale **open-source**, modulaire et entièrement configurable, conçue pour les cabinets dentaires (praticien solo ou cabinets de 1 à 3 praticiens). Pensée nativement pour le contexte marocain (**MAD**, **+212**, **Loi 09-08 / CNDP**) et internationalisée en **4 langues** (**Français**, **Arabe RTL**, **Anglais**, **Espagnol**), elle peut être adaptée en quelques secondes à tout autre pays ou cabinet tiers grâce à sa configuration centralisée par variables d'environnement.
 
 ---
 
@@ -26,8 +27,8 @@ Aucune clé Firebase n'est requise pour tester l'application localement : un jeu
 
 ```bash
 # 1. Cloner le dépôt et installer les dépendances
-git clone <url-du-repo>
-cd brave-turing
+git clone https://github.com/ABOURAYAN2019/dentamaroc.git
+cd dentamaroc
 npm install
 
 # 2. Copier la configuration par défaut (Optionnel)
@@ -51,7 +52,7 @@ Ouvrez `http://localhost:3000` dans votre navigateur.
 | **4. Actes, Plans & Devis PDF** | Catalogue bilingue d'actes dentaires éditable, plan de traitement par dent, barre de progression des soins et **génération de devis estimatif en PDF**. |
 | **5. Facturation & Clôture de Caisse** | Factures d'honoraires, paiements échelonnés (Espèces, Carte TPE, Chèque, Virement), gestion des dépenses espèces et **Clôture Journalière de Caisse (Z de caisse en PDF)** avec calcul automatique d'écart. |
 | **6. Ordonnances & Certificats PDF** | Prescriptions rapides avec catalogue de médicaments fréquents pré-dosés (antibiotiques, antalgiques, bains de bouche) et certificats médicaux d'arrêt de travail en PDF. |
-| **7. Multilingue FR / AR (RTL) & PWA** | Bascule instantanée Français / Arabe avec mise en page **RTL** native (tout en conservant l'orientation anatomique universelle de l'odontogramme) et support **PWA** hors-ligne. |
+| **7. Multilingue 4 Langues (FR / AR RTL / EN / ES) & PWA** | Bascule instantanée entre **Français**, **العربية (RTL)**, **English** et **Español** avec mise en page **RTL** native (tout en conservant l'orientation anatomique universelle de l'odontogramme) et support **PWA** hors-ligne. |
 
 ---
 

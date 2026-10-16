@@ -6,16 +6,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogCloseButton } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogCloseButton,
+} from '@/components/ui/dialog';
 import {
   Building2,
   ShieldCheck,
   Save,
   CheckCircle2,
   UserPlus,
+  Globe,
 } from 'lucide-react';
 import { UserProfile, UserRole } from '@/types';
 import { appConfig } from '@/config/app.config';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 
 export const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -72,7 +81,7 @@ export const SettingsPage: React.FC = () => {
   const [newMemberName, setNewMemberName] = useState('');
   const [newMemberEmail, setNewMemberEmail] = useState('');
   const [newMemberRole, setNewMemberRole] = useState<UserRole>('assistant');
-  const [newMemberPhone, setNewMemberPhone] = useState('+2126');
+  const [newMemberPhone, setNewMemberPhone] = useState(`${appConfig.regional.countryDialPrefix}6`);
 
   const handleSaveClinicSettings = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,9 +111,7 @@ export const SettingsPage: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-800">{t('nav.settings')}</h1>
-        <p className="text-sm text-slate-500">
-          Configuration générale du cabinet dentaire, habilitations de l'équipe et conformité CNDP
-        </p>
+        <p className="text-sm text-slate-500">{t('settings.subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -115,17 +122,17 @@ export const SettingsPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-teal-600" />
                 <CardTitle className="text-base font-bold text-slate-800">
-                  Fiche & En-tête Légal du Cabinet
+                  {t('settings.clinicProfile')}
                 </CardTitle>
               </div>
               <CardDescription className="text-xs">
-                Ces mentions figureront sur vos ordonnances, devis et factures d'honoraires
+                {t('settings.clinicProfileDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
               <form onSubmit={handleSaveClinicSettings} className="space-y-4">
                 <div className="space-y-1">
-                  <Label>Raison sociale / Nom du Cabinet *</Label>
+                  <Label>{t('settings.clinicNameLabel')}</Label>
                   <Input
                     required
                     value={clinicName}
@@ -135,7 +142,7 @@ export const SettingsPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <Label>N° INPE / Ordre National des Médecins Dentistes *</Label>
+                    <Label>{t('settings.licenseLabel')}</Label>
                     <Input
                       required
                       value={licenseNumber}
@@ -143,7 +150,7 @@ export const SettingsPage: React.FC = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label>Identifiant Commun de l'Entreprise (ICE)</Label>
+                    <Label>{t('settings.iceLabel')}</Label>
                     <Input
                       value={ice}
                       onChange={(e) => setIce(e.target.value)}
@@ -154,14 +161,14 @@ export const SettingsPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <Label>Adresse</Label>
+                    <Label>{t('settings.addressLabel')}</Label>
                     <Input
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label>Ville</Label>
+                    <Label>{t('settings.cityLabel')}</Label>
                     <Input
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
@@ -171,14 +178,14 @@ export const SettingsPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <Label>Téléphone Fixe / Standard</Label>
+                    <Label>{t('settings.landlineLabel')}</Label>
                     <Input
                       value={phone1}
                       onChange={(e) => setPhone1(e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label>Téléphone Mobile (Rappels WhatsApp)</Label>
+                    <Label>{t('settings.mobileLabel')}</Label>
                     <Input
                       value={phone2}
                       onChange={(e) => setPhone2(e.target.value)}
@@ -187,7 +194,7 @@ export const SettingsPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <Label>Email officiel du cabinet</Label>
+                  <Label>{t('settings.emailLabel')}</Label>
                   <Input
                     type="email"
                     value={email}
@@ -201,13 +208,13 @@ export const SettingsPage: React.FC = () => {
                     className="bg-teal-600 hover:bg-teal-700 text-white font-semibold"
                   >
                     <Save className="w-4 h-4 me-1.5" />
-                    Enregistrer les modifications
+                    {t('settings.saveChanges')}
                   </Button>
 
                   {savedSuccess && (
                     <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
                       <CheckCircle2 className="w-4 h-4" />
-                      Paramètres mis à jour avec succès
+                      {t('settings.savedSuccess')}
                     </span>
                   )}
                 </div>
@@ -220,11 +227,9 @@ export const SettingsPage: React.FC = () => {
             <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-base font-bold text-slate-800">
-                  Utilisateurs & Rôles de l'Équipe
+                  {t('settings.teamTitle')}
                 </CardTitle>
-                <CardDescription className="text-xs">
-                  Gestion des accès selon la matrice de permissions CNDP
-                </CardDescription>
+                <CardDescription className="text-xs">{t('settings.teamDesc')}</CardDescription>
               </div>
 
               <Button
@@ -233,7 +238,7 @@ export const SettingsPage: React.FC = () => {
                 className="bg-teal-600 hover:bg-teal-700 text-white text-xs"
               >
                 <UserPlus className="w-3.5 h-3.5 me-1" />
-                Ajouter un collaborateur
+                {t('settings.addCollaborator')}
               </Button>
             </CardHeader>
             <CardContent className="p-0">
@@ -256,11 +261,7 @@ export const SettingsPage: React.FC = () => {
                           }
                           className="text-[10px]"
                         >
-                          {member.role === 'dentist'
-                            ? 'Chirurgien-Dentiste'
-                            : member.role === 'assistant'
-                            ? 'Assistante'
-                            : 'Secrétaire'}
+                          {t(`roles.${member.role}`)}
                         </Badge>
                       </div>
                       <div className="text-xs text-slate-500 flex items-center gap-3">
@@ -272,7 +273,7 @@ export const SettingsPage: React.FC = () => {
 
                     <div className="flex items-center gap-2 self-end sm:self-center">
                       <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">
-                        Compte Actif
+                        {t('common.activeAccount')}
                       </span>
                     </div>
                   </div>
@@ -282,49 +283,68 @@ export const SettingsPage: React.FC = () => {
           </Card>
         </div>
 
-        {/* Right Column: Preferences & CNDP Information */}
+        {/* Right Column: Language Selector, Preferences & CNDP Information */}
         <div className="space-y-6">
+          {/* Interactive Language Card */}
+          <Card className="border-slate-200 shadow-sm bg-white">
+            <CardHeader className="pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-teal-600" />
+                <CardTitle className="text-sm font-bold text-slate-800">
+                  {t('languages.label')}
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <LanguageSwitcher variant="cards" />
+            </CardContent>
+          </Card>
+
           <Card className="border-slate-200 shadow-sm bg-white">
             <CardHeader className="pb-3 border-b border-slate-100">
               <CardTitle className="text-sm font-bold text-slate-800">
-                Paramètres Régionaux ({appConfig.regional.defaultCity})
+                {t('settings.regionalSettings', { city: appConfig.regional.defaultCity })}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-3 text-xs">
               <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span className="text-slate-500">Devise Principale</span>
+                <span className="text-slate-500">{t('settings.mainCurrency')}</span>
                 <span className="font-bold text-slate-800">{appConfig.regional.currency}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span className="text-slate-500">Fuseau Horaire</span>
+                <span className="text-slate-500">{t('settings.timezone')}</span>
                 <span className="font-bold text-slate-800">{appConfig.regional.timezone}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span className="text-slate-500">Format de Date</span>
+                <span className="text-slate-500">{t('settings.dateFormat')}</span>
                 <span className="font-bold text-slate-800">JJ/MM/AAAA ({appConfig.regional.locale})</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span className="text-slate-500">Indicatif Téléphonique</span>
+                <span className="text-slate-500">{t('settings.dialCode')}</span>
                 <span className="font-bold text-slate-800">{appConfig.regional.countryDialPrefix}</span>
               </div>
             </CardContent>
           </Card>
 
-          {/* CNDP Law Notice */}
+          {/* Compliance Law Notice */}
           <div className="p-5 rounded-2xl border border-teal-200 bg-teal-50/70 text-xs space-y-2.5">
             <div className="flex items-center gap-2 font-bold text-teal-900">
               <ShieldCheck className="w-5 h-5 text-teal-600" />
               <span>
-                Conformité {appConfig.regional.regulatoryLaw} & {appConfig.regional.regulatoryAuthority}
+                {t('settings.complianceTitle', {
+                  law: appConfig.regional.regulatoryLaw,
+                  authority: appConfig.regional.regulatoryAuthority,
+                })}
               </span>
             </div>
             <p className="text-slate-600 leading-relaxed">
-              {appConfig.app.name} intègre le principe de minimisation des données, le recueil du consentement éclairé
-              ainsi que le droit à l&apos;oubli et à l&apos;exportabilité de chaque dossier patient.
+              {t('settings.complianceBody', { appName: appConfig.app.name })}
             </p>
             <p className="text-[11px] text-teal-800 font-medium">
-              * Hébergement cloud en région ({appConfig.firebase.region}). Avant toute exploitation avec des patients réels,
-              veillez à déposer une déclaration préalable auprès de l&apos;autorité ({appConfig.regional.regulatoryAuthority}).
+              {t('settings.complianceCloudNote', {
+                region: appConfig.firebase.region,
+                authority: appConfig.regional.regulatoryAuthority,
+              })}
             </p>
           </div>
         </div>
@@ -334,15 +354,13 @@ export const SettingsPage: React.FC = () => {
       <Dialog open={isInviteModalOpen} onOpenChange={setIsInviteModalOpen}>
         <DialogCloseButton onClose={() => setIsInviteModalOpen(false)} />
         <DialogHeader>
-          <DialogTitle>Ajouter un membre à l'équipe</DialogTitle>
-          <DialogDescription>
-            Attribution des accès et du rôle pour la gestion du cabinet
-          </DialogDescription>
+          <DialogTitle>{t('settings.addCollaborator')}</DialogTitle>
+          <DialogDescription>{t('settings.teamDesc')}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleInviteMember} className="space-y-4">
           <div className="space-y-1">
-            <Label>Nom complet *</Label>
+            <Label>{t('patients.lastName')} *</Label>
             <Input
               required
               value={newMemberName}
@@ -353,7 +371,7 @@ export const SettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <Label>Email de connexion *</Label>
+              <Label>{t('common.email')} *</Label>
               <Input
                 type="email"
                 required
@@ -363,26 +381,26 @@ export const SettingsPage: React.FC = () => {
               />
             </div>
             <div className="space-y-1">
-              <Label>Téléphone mobile (+212) *</Label>
+              <Label>{t('common.phone')} *</Label>
               <Input
                 required
                 value={newMemberPhone}
                 onChange={(e) => setNewMemberPhone(e.target.value)}
-                placeholder="+2126XXXXXXXX"
+                placeholder={`${appConfig.regional.countryDialPrefix}6XXXXXXXX`}
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <Label>Rôle attribué *</Label>
+            <Label>{t('roles.activeRole')}</Label>
             <select
               value={newMemberRole}
               onChange={(e) => setNewMemberRole(e.target.value as UserRole)}
               className="w-full h-9 rounded-md border border-slate-300 bg-white px-3 py-1 text-sm font-medium"
             >
-              <option value="assistant">Assistante Dentaire (Accès clinique, sans suppression)</option>
-              <option value="secretary">Secrétaire (Accueil, facturation, sans dossier médical)</option>
-              <option value="dentist">Chirurgien-Dentiste Associé (Accès complet)</option>
+              <option value="assistant">{t('roles.assistant')}</option>
+              <option value="secretary">{t('roles.secretary')}</option>
+              <option value="dentist">{t('roles.dentist')}</option>
             </select>
           </div>
 
@@ -392,13 +410,13 @@ export const SettingsPage: React.FC = () => {
               variant="outline"
               onClick={() => setIsInviteModalOpen(false)}
             >
-              Annuler
+              {t('common.cancel')}
             </Button>
             <Button
               type="submit"
               className="bg-teal-600 hover:bg-teal-700 text-white font-semibold"
             >
-              Ajouter le compte
+              {t('common.add')}
             </Button>
           </DialogFooter>
         </form>

@@ -8,11 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { UserRole } from '@/types';
 import { Activity, ShieldCheck, Stethoscope, UserCheck, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { appConfig } from '@/config/app.config';
 
 export const LoginPage: React.FC = () => {
   const { login, loginAsDemoRole, isLoading } = useAuth();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState('dr.tazi@cabinet-tazi.ma');
   const [password, setPassword] = useState('••••••••');
@@ -28,21 +30,11 @@ export const LoginPage: React.FC = () => {
     navigate('/');
   };
 
-  const toggleLanguage = () => {
-    const nextLng = i18n.language === 'ar' ? 'fr' : 'ar';
-    i18n.changeLanguage(nextLng);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 flex flex-col justify-center items-center p-4">
-      {/* Top bar with language switcher */}
-      <div className="absolute top-4 right-4">
-        <button
-          onClick={toggleLanguage}
-          className="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-sm font-medium backdrop-blur transition-colors border border-white/10"
-        >
-          {i18n.language === 'ar' ? 'Français' : 'العربية (RTL)'}
-        </button>
+      {/* Top bar with 4-language switcher */}
+      <div className="absolute top-4 end-4">
+        <LanguageSwitcher variant="login" />
       </div>
 
       <div className="w-full max-w-md">
@@ -51,10 +43,10 @@ export const LoginPage: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-teal-500/20 text-teal-300 border border-teal-400/30 mb-3 shadow-lg shadow-teal-900/40">
             <Activity className="w-9 h-9 text-teal-300" />
           </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">DentaMaroc</h1>
-          <p className="text-sm text-teal-200/80 mt-1">
-            Logiciel Médical & Gestion de Cabinet Dentaire au Maroc
-          </p>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">
+            {appConfig.app.name}
+          </h1>
+          <p className="text-sm text-teal-200/80 mt-1">{t('tagline')}</p>
         </div>
 
         {/* Login Card */}
@@ -64,7 +56,10 @@ export const LoginPage: React.FC = () => {
               {t('auth.loginTitle')}
             </CardTitle>
             <CardDescription className="text-center text-xs text-slate-500">
-              Conformité Loi 09-08 (CNDP) • Accès Sécurisé par Rôle
+              {t('auth.complianceSubtitle', {
+                law: appConfig.regional.regulatoryLaw,
+                authority: appConfig.regional.regulatoryAuthority,
+              })}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -117,13 +112,15 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleQuickDemo('dentist')}
-                className="flex items-center justify-between p-2.5 rounded-lg border border-teal-200 bg-teal-50/70 hover:bg-teal-100 text-teal-900 text-left transition-all"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-teal-200 bg-teal-50/70 hover:bg-teal-100 text-teal-900 text-start transition-all"
               >
                 <div className="flex items-center gap-2.5">
-                  <Stethoscope className="w-5 h-5 text-teal-700" />
+                  <Stethoscope className="w-5 h-5 text-teal-700 shrink-0" />
                   <div>
-                    <div className="text-xs font-bold">Dr. Amine TAZI (Dentiste / Admin)</div>
-                    <div className="text-[11px] text-teal-700">Accès intégral : clinique, CNDP, tarifs, ordonnances</div>
+                    <div className="text-xs font-bold">
+                      Dr. Amine TAZI ({t('auth.loginAsDentist')})
+                    </div>
+                    <div className="text-[11px] text-teal-700">{t('auth.dentistPerms')}</div>
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-teal-700">→</span>
@@ -132,13 +129,15 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleQuickDemo('assistant')}
-                className="flex items-center justify-between p-2.5 rounded-lg border border-sky-200 bg-sky-50/70 hover:bg-sky-100 text-sky-900 text-left transition-all"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-sky-200 bg-sky-50/70 hover:bg-sky-100 text-sky-900 text-start transition-all"
               >
                 <div className="flex items-center gap-2.5">
-                  <UserCheck className="w-5 h-5 text-sky-700" />
+                  <UserCheck className="w-5 h-5 text-sky-700 shrink-0" />
                   <div>
-                    <div className="text-xs font-bold">Fatima Zohra (Assistante)</div>
-                    <div className="text-[11px] text-sky-700">Dossiers, odontogramme, radios, agenda</div>
+                    <div className="text-xs font-bold">
+                      Fatima Zohra ({t('auth.loginAsAssistant')})
+                    </div>
+                    <div className="text-[11px] text-sky-700">{t('auth.assistantPerms')}</div>
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-sky-700">→</span>
@@ -147,13 +146,15 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleQuickDemo('secretary')}
-                className="flex items-center justify-between p-2.5 rounded-lg border border-rose-200 bg-rose-50/70 hover:bg-rose-100 text-rose-900 text-left transition-all"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-rose-200 bg-rose-50/70 hover:bg-rose-100 text-rose-900 text-start transition-all"
               >
                 <div className="flex items-center gap-2.5">
-                  <Shield className="w-5 h-5 text-rose-700" />
+                  <Shield className="w-5 h-5 text-rose-700 shrink-0" />
                   <div>
-                    <div className="text-xs font-bold">Nadia IDRISSI (Secrétaire)</div>
-                    <div className="text-[11px] text-rose-700">Agenda, facturation & caisse (pas d'accès aux actes médicaux)</div>
+                    <div className="text-xs font-bold">
+                      Nadia IDRISSI ({t('auth.loginAsSecretary')})
+                    </div>
+                    <div className="text-[11px] text-rose-700">{t('auth.secretaryPerms')}</div>
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-rose-700">→</span>
@@ -162,10 +163,15 @@ export const LoginPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Moroccan compliance badge */}
+        {/* Compliance badge */}
         <div className="mt-6 text-center text-xs text-teal-200/70 flex items-center justify-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Données de santé hébergées conformément aux directives CNDP • Devise MAD</span>
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>
+            {t('auth.footerCompliance', {
+              authority: appConfig.regional.regulatoryAuthority,
+              currency: appConfig.regional.currency,
+            })}
+          </span>
         </div>
       </div>
     </div>

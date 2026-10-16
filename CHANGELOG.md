@@ -16,6 +16,10 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/)
 - **Configuration Centralisée & White-Labeling (`src/config/app.config.ts`)** :
   - Validation par schéma **Zod** de toutes les variables d'environnement (`VITE_APP_NAME`, `VITE_DEFAULT_CURRENCY`, `VITE_COUNTRY_DIAL_CODE`, `VITE_TIMEZONE`, `VITE_REGULATORY_AUTHORITY`, etc.).
   - Possibilité pour des tiers d'adapter l'application à un autre pays ou cabinet uniquement via `.env`.
+- **Internationalisation 4 Langues (`FR`, `AR`, `EN`, `ES`)** :
+  - Support complet du **Français**, **Arabe (RTL)**, **Anglais** et **Espagnol** (`src/locales/{fr,ar,en,es}/translation.json`).
+  - Composant `LanguageSwitcher` dans la barre de navigation, l'écran de connexion et la page Paramètres.
+  - Tests unitaires automatisés garantissant 100 % de parité des clés de traduction entre les 4 langues (`tests/unit/i18n.test.ts`).
 - **Qualité & Open-Source** :
   - Composant global `ErrorBoundary` pour la résilience de l'interface clinique.
   - Découpage du bundle de production (`manualChunks` dans `vite.config.ts`).

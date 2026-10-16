@@ -1,7 +1,15 @@
 {
   "appName": "DentaMaroc",
-  "tagline": "Gestion de cabinet dentaire au Maroc",
+  "tagline": "Logiciel Médical & Gestion de Cabinet Dentaire",
+  "languages": {
+    "label": "Langue de l'interface",
+    "fr": "Français",
+    "ar": "العربية",
+    "en": "English",
+    "es": "Español"
+  },
   "nav": {
+    "mainNav": "Navigation Principale",
     "dashboard": "Tableau de bord",
     "agenda": "Agenda & RDV",
     "patients": "Dossiers Patients",
@@ -9,12 +17,18 @@
     "billing": "Facturation & Caisse",
     "documents": "Ordonnances & Documents",
     "settings": "Paramètres",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "complianceNotice": "Conformité {{law}} ({{authority}})"
   },
   "roles": {
+    "activeRole": "Rôle actif :",
+    "switchRole": "Basculer en {{role}}",
     "dentist": "Chirurgien-Dentiste",
     "assistant": "Assistante Dentaire",
-    "secretary": "Secrétaire Médicale"
+    "secretary": "Secrétaire Médicale",
+    "dentistShort": "Dentiste",
+    "assistantShort": "Assistante",
+    "secretaryShort": "Secrétaire"
   },
   "common": {
     "search": "Rechercher...",
@@ -40,36 +54,56 @@
     "cin": "CIN",
     "notes": "Remarques",
     "success": "Opération réussie",
-    "error": "Une erreur est survenue"
+    "error": "Une erreur est survenue",
+    "activeAccount": "Compte Actif"
   },
   "auth": {
     "login": "Connexion",
     "loginTitle": "Accédez à votre cabinet",
+    "complianceSubtitle": "Conformité {{law}} ({{authority}}) • Accès Sécurisé par Rôle",
     "emailLabel": "Adresse Email",
     "passwordLabel": "Mot de passe",
     "submit": "Se connecter",
     "demoAccounts": "Comptes de Démonstration",
     "loginAsDentist": "Dentiste (Admin)",
+    "dentistPerms": "Accès intégral : clinique, CNDP, tarifs, ordonnances",
     "loginAsAssistant": "Assistante",
+    "assistantPerms": "Dossiers, odontogramme, radios, agenda",
     "loginAsSecretary": "Secrétaire",
-    "logoutConfirm": "Voulez-vous vraiment vous déconnecter ?"
+    "secretaryPerms": "Agenda, facturation & caisse (pas d'accès médical)",
+    "logoutConfirm": "Voulez-vous vraiment vous déconnecter ?",
+    "footerCompliance": "Données de santé hébergées conformément aux directives {{authority}} • Devise {{currency}}"
   },
   "dashboard": {
     "title": "Tableau de Bord du Cabinet",
+    "welcome": "Bonjour, {{name}} 👋",
+    "realtimeSubtitle": "Voici la situation du cabinet en temps réel à {{city}}",
     "todayAppointments": "RDV Aujourd'hui",
+    "waitingCount": "{{count}} en attente",
+    "inChairCount": "{{count}} au fauteuil",
     "monthlyRevenue": "Chiffre d'Affaires du Mois",
     "pendingBalances": "Impayés Patients",
     "waitingRoom": "Salle d'attente",
+    "readyForInstall": "Prêts pour installation",
     "quickActions": "Actions Rapides",
     "newAppointment": "Nouveau RDV",
     "newPatient": "Nouveau Patient",
     "quickPayment": "Encaisser",
-    "frequentProcedures": "Actes les plus fréquents"
+    "frequentProcedures": "Actes les plus fréquents",
+    "pricingSubtitle": "Nomenclature & Tarifs ({{currency}})",
+    "todaySchedule": "Planning du Jour ({{count}} patients)",
+    "todayScheduleDesc": "Gestion tactile directe du flux patient (Arrivé → Fauteuil → Terminé)",
+    "viewFullAgenda": "Voir l'agenda complet →",
+    "markArrived": "Marquer Arrivé",
+    "sendToChair": "Au fauteuil",
+    "completeVisit": "Terminer",
+    "cndpActive": "Conformité {{authority}} active",
+    "cndpAuditDesc": "Toutes les consultations et modifications de dossiers sont enregistrées dans le journal d'audit horodaté."
   },
   "patients": {
     "title": "Gestion des Patients",
     "newPatient": "Nouveau Dossier Patient",
-    "searchPlaceholder": "Rechercher par nom, téléphone (+212) ou CIN...",
+    "searchPlaceholder": "Rechercher par nom, téléphone ou CIN...",
     "identity": "État Civil",
     "firstName": "Prénom",
     "lastName": "Nom",
@@ -113,9 +147,32 @@
   },
   "odontogram": {
     "title": "Odontogramme Interactif (FDI)",
+    "clickHint": "Touchez une dent pour la sélectionner, ou directement une face (vue occlusale) pour la marquer",
     "adultTeeth": "Denture Adulte (32 dents)",
     "childTeeth": "Denture Enfant (20 dents)",
     "selectedTooth": "Dent sélectionnée",
+    "patientRight": "Droite patient",
+    "patientLeft": "Gauche patient",
+    "maxilla": "Maxillaire",
+    "mandible": "Mandibule",
+    "livePreview": "Aperçu en direct avant enregistrement",
+    "selectToothPrompt": "Sélectionnez une dent sur le schéma",
+    "touchToothPrompt": "Touchez une dent sur le schéma pour saisir un diagnostic",
+    "clinicalState": "État clinique",
+    "material": "Matériau",
+    "affectedSurfaces": "Faces concernées",
+    "observations": "Observations / Diagnostic",
+    "observationsPlaceholder": "Ex: Carie juxta-gingivale, sensibilité au froid...",
+    "saveTooth": "Enregistrer la dent {{tooth}}",
+    "savedChanges": "Modifications enregistrées",
+    "lastUpdated": "Dernière mise à jour",
+    "updatedBy": "Par {{author}}",
+    "materials": {
+      "composite": "Composite",
+      "amalgam": "Amalgame",
+      "ceramic": "Céramique",
+      "metal": "Métal / Or"
+    },
     "states": {
       "healthy": "Saine",
       "caries": "Carie active",
@@ -132,8 +189,13 @@
       "mesial": "Mésiale",
       "distal": "Distale",
       "vestibular": "Vestibulaire",
-      "lingual": "Linguale / Palatine"
+      "lingual": "Linguale / Palatine",
+      "cervical": "Cervicale"
     }
+  },
+  "treatments": {
+    "title": "Catalogue des Actes & Devis",
+    "subtitle": "Nomenclature officielle et tarification personnalisable du cabinet"
   },
   "billing": {
     "title": "Facturation & Caisse",
@@ -153,5 +215,35 @@
       "unpaid": "Impayée",
       "cancelled": "Annulée"
     }
+  },
+  "documents": {
+    "title": "Ordonnances & Certificats Médicaux",
+    "subtitle": "Génération de documents PDF bilingues avec en-tête officiel du cabinet"
+  },
+  "settings": {
+    "subtitle": "Configuration générale du cabinet dentaire, habilitations de l'équipe, langues et conformité",
+    "clinicProfile": "Fiche & En-tête Légal du Cabinet",
+    "clinicProfileDesc": "Ces mentions figureront sur vos ordonnances, devis et factures d'honoraires",
+    "clinicNameLabel": "Raison sociale / Nom du Cabinet *",
+    "licenseLabel": "N° INPE / Ordre National des Médecins Dentistes *",
+    "iceLabel": "Identifiant Commun de l'Entreprise (ICE)",
+    "addressLabel": "Adresse",
+    "cityLabel": "Ville",
+    "landlineLabel": "Téléphone Fixe / Standard",
+    "mobileLabel": "Téléphone Mobile (Rappels WhatsApp)",
+    "emailLabel": "Email officiel du cabinet",
+    "saveChanges": "Enregistrer les modifications",
+    "savedSuccess": "Paramètres mis à jour avec succès",
+    "teamTitle": "Utilisateurs & Rôles de l'Équipe",
+    "teamDesc": "Gestion des accès selon la matrice de permissions RBAC",
+    "addCollaborator": "Ajouter un collaborateur",
+    "regionalSettings": "Paramètres Régionaux ({{city}})",
+    "mainCurrency": "Devise Principale",
+    "timezone": "Fuseau Horaire",
+    "dateFormat": "Format de Date",
+    "dialCode": "Indicatif Téléphonique",
+    "complianceTitle": "Conformité {{law}} & {{authority}}",
+    "complianceBody": "{{appName}} intègre le principe de minimisation des données, le recueil du consentement éclairé ainsi que le droit à l'oubli et à l'exportabilité de chaque dossier patient.",
+    "complianceCloudNote": "* Hébergement cloud en région ({{region}}). Avant toute exploitation avec des patients réels, veillez à déposer une déclaration préalable auprès de l'autorité ({{authority}})."
   }
 }

@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AppointmentStatus } from '@/types';
+import { appConfig } from '@/config/app.config';
 
 export const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
@@ -47,19 +48,19 @@ export const DashboardPage: React.FC = () => {
   };
 
   const getStatusBadge = (status: AppointmentStatus) => {
+    const label = t(`agenda.status.${status}`);
     switch (status) {
       case 'arrived':
-        return <Badge variant="warning">En salle d'attente</Badge>;
+        return <Badge variant="warning">{label}</Badge>;
       case 'in_progress':
-        return <Badge variant="info">Au fauteuil</Badge>;
+        return <Badge variant="info">{label}</Badge>;
       case 'completed':
-        return <Badge variant="success">Terminé</Badge>;
+        return <Badge variant="success">{label}</Badge>;
       case 'cancelled':
-        return <Badge variant="destructive">Annulé</Badge>;
       case 'no_show':
-        return <Badge variant="destructive">Absent</Badge>;
+        return <Badge variant="destructive">{label}</Badge>;
       default:
-        return <Badge variant="secondary">Planifié</Badge>;
+        return <Badge variant="secondary">{label}</Badge>;
     }
   };
 
@@ -69,10 +70,10 @@ export const DashboardPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
-            Bonjour, {user?.fullName} 👋
+            {t('dashboard.welcome', { name: user?.fullName })}
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            Voici la situation du cabinet en temps réel à Casablanca
+            {t('dashboard.realtimeSubtitle', { city: appConfig.regional.defaultCity })}
           </p>
         </div>
 
@@ -121,14 +122,18 @@ export const DashboardPage: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-extrabold text-slate-900">{todayAptsCount}</div>
             <div className="flex items-center gap-2 mt-2 text-xs text-slate-600">
-              <span className="font-semibold text-amber-600">{inWaitingRoom} en attente</span>
+              <span className="font-semibold text-amber-600">
+                {t('dashboard.waitingCount', { count: inWaitingRoom })}
+              </span>
               <span>•</span>
-              <span className="font-semibold text-sky-600">{inChair} au fauteuil</span>
+              <span className="font-semibold text-sky-600">
+                {t('dashboard.inChairCount', { count: inChair })}
+              </span>
             </div>
           </CardContent>
         </Card>
 
-        {/* Monthly Revenue (MAD) */}
+        {/* Monthly Revenue */}
         {isBillingStaff ? (
           <Card className="hover:shadow-md transition-shadow border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -141,25 +146,25 @@ export const DashboardPage: React.FC = () => {
               <div className="text-2xl font-extrabold text-emerald-600">
                 {formatMAD(monthlyRevenue)}
               </div>
-              <p className="text-xs text-slate-500 mt-2">Mois d'Octobre 2026</p>
+              <p className="text-xs text-slate-500 mt-2">2026</p>
             </CardContent>
           </Card>
         ) : (
           <Card className="hover:shadow-md transition-shadow border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-semibold text-slate-500 uppercase">
-                Actes Prévus Aujourd'hui
+                {t('dashboard.todayAppointments')}
               </CardTitle>
               <TrendingUp className="h-4 w-4 text-teal-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-extrabold text-teal-700">4 actes</div>
-              <p className="text-xs text-slate-500 mt-2">1 chirurgie, 1 soin, 2 contrôles</p>
+              <div className="text-2xl font-extrabold text-teal-700">{todayAptsCount}</div>
+              <p className="text-xs text-slate-500 mt-2">{appConfig.regional.defaultCity}</p>
             </CardContent>
           </Card>
         )}
 
-        {/* Patient Balances (Impayés en MAD) */}
+        {/* Patient Balances */}
         {isBillingStaff ? (
           <Card className="hover:shadow-md transition-shadow border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -172,20 +177,20 @@ export const DashboardPage: React.FC = () => {
               <div className="text-2xl font-extrabold text-rose-600">
                 {formatMAD(totalUnpaid)}
               </div>
-              <p className="text-xs text-slate-500 mt-2">Sur 2 dossiers en cours</p>
+              <p className="text-xs text-slate-500 mt-2">{appConfig.regional.currency}</p>
             </CardContent>
           </Card>
         ) : (
           <Card className="hover:shadow-md transition-shadow border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-semibold text-slate-500 uppercase">
-                Stérilisation & Salle
+                {t('common.status')}
               </CardTitle>
               <CheckCircle2 className="h-4 w-4 text-teal-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-extrabold text-teal-600">Opérationnel</div>
-              <p className="text-xs text-slate-500 mt-2">Cycles autoclave conformes</p>
+              <div className="text-2xl font-extrabold text-teal-600">OK</div>
+              <p className="text-xs text-slate-500 mt-2">{appConfig.regional.regulatoryAuthority}</p>
             </CardContent>
           </Card>
         )}
@@ -199,8 +204,8 @@ export const DashboardPage: React.FC = () => {
             <UserCheck className="h-4 w-4 text-amber-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-extrabold text-amber-800">{inWaitingRoom} patient(s)</div>
-            <p className="text-xs text-amber-700 mt-2">Prêts pour installation</p>
+            <div className="text-2xl font-extrabold text-amber-800">{inWaitingRoom}</div>
+            <p className="text-xs text-amber-700 mt-2">{t('dashboard.readyForInstall')}</p>
           </CardContent>
         </Card>
       </div>
@@ -212,11 +217,9 @@ export const DashboardPage: React.FC = () => {
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
               <CardTitle className="text-base font-bold text-slate-800">
-                Planning du Jour ({appointments.length} patients)
+                {t('dashboard.todaySchedule', { count: appointments.length })}
               </CardTitle>
-              <CardDescription>
-                Gestion tactile directe du flux patient (Arrivé → Fauteuil → Terminé)
-              </CardDescription>
+              <CardDescription>{t('dashboard.todayScheduleDesc')}</CardDescription>
             </div>
             <Button
               variant="outline"
@@ -224,7 +227,7 @@ export const DashboardPage: React.FC = () => {
               onClick={() => navigate('/agenda')}
               className="text-xs"
             >
-              Voir l'agenda complet →
+              {t('dashboard.viewFullAgenda')}
             </Button>
           </CardHeader>
           <CardContent className="p-0">
@@ -232,7 +235,7 @@ export const DashboardPage: React.FC = () => {
               {appointments.map((apt) => {
                 const waLink = getWhatsAppReminderLink(
                   apt.patientPhone,
-                  `Bonjour ${apt.patientName}, nous vous confirmons votre RDV chez DentaMaroc aujourd'hui à ${formatTimeMA(apt.startTime)} avec ${apt.dentistName}. Cabinet Dr. TAZI.`
+                  `Bonjour ${apt.patientName}, nous vous confirmons votre RDV chez ${appConfig.app.name} aujourd'hui à ${formatTimeMA(apt.startTime)} avec ${apt.dentistName}.`
                 );
 
                 return (
@@ -249,7 +252,7 @@ export const DashboardPage: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => navigate(`/patients/${apt.patientId}`)}
-                            className="font-bold text-sm text-slate-800 hover:text-teal-700 hover:underline text-left"
+                            className="font-bold text-sm text-slate-800 hover:text-teal-700 hover:underline text-start"
                           >
                             {apt.patientName}
                           </button>
@@ -271,7 +274,7 @@ export const DashboardPage: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
-                        title="Envoyer un rappel WhatsApp pré-rempli"
+                        title={t('agenda.sendWhatsAppReminder')}
                       >
                         <MessageCircle className="w-3.5 h-3.5" />
                         <span>WhatsApp</span>
@@ -284,7 +287,7 @@ export const DashboardPage: React.FC = () => {
                           className="text-xs h-7 px-2 bg-amber-100 text-amber-800 hover:bg-amber-200"
                           onClick={() => handleUpdateStatus(apt.id, 'arrived')}
                         >
-                          Marquer Arrivé
+                          {t('dashboard.markArrived')}
                         </Button>
                       )}
 
@@ -294,7 +297,7 @@ export const DashboardPage: React.FC = () => {
                           className="text-xs h-7 px-2 bg-teal-600 hover:bg-teal-700 text-white"
                           onClick={() => handleUpdateStatus(apt.id, 'in_progress')}
                         >
-                          Au fauteuil
+                          {t('dashboard.sendToChair')}
                         </Button>
                       )}
 
@@ -305,7 +308,7 @@ export const DashboardPage: React.FC = () => {
                           className="text-xs h-7 px-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50"
                           onClick={() => handleUpdateStatus(apt.id, 'completed')}
                         >
-                          Terminer
+                          {t('dashboard.completeVisit')}
                         </Button>
                       )}
                     </div>
@@ -323,7 +326,9 @@ export const DashboardPage: React.FC = () => {
               <CardTitle className="text-sm font-bold text-slate-800">
                 {t('dashboard.frequentProcedures')}
               </CardTitle>
-              <CardDescription>Nomenclature & Tarifs en Dirhams (MAD)</CardDescription>
+              <CardDescription>
+                {t('dashboard.pricingSubtitle', { currency: appConfig.regional.currency })}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {DEMO_PROCEDURES.slice(0, 5).map((proc) => (
@@ -342,15 +347,15 @@ export const DashboardPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* CNDP & Healthcare Security banner */}
+          {/* Compliance & Healthcare Security banner */}
           <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/60 text-teal-900 text-xs space-y-1">
             <div className="font-bold flex items-center gap-1.5 text-teal-800">
               <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Conformité CNDP active</span>
+              <span>
+                {t('dashboard.cndpActive', { authority: appConfig.regional.regulatoryAuthority })}
+              </span>
             </div>
-            <p className="text-slate-600 leading-relaxed">
-              Toutes les consultations et modifications de dossiers sont enregistrées dans le journal d'audit horodaté.
-            </p>
+            <p className="text-slate-600 leading-relaxed">{t('dashboard.cndpAuditDesc')}</p>
           </div>
         </div>
       </div>

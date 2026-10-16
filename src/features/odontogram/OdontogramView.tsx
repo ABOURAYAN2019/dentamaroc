@@ -221,7 +221,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
           </Button>
         </div>
 
-        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs" aria-label="Légende">
+        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs" aria-label="Legend">
           {LEGEND_STATES.map((state) => (
             <li key={state} className="flex items-center gap-1.5 font-medium text-slate-600">
               <span
@@ -241,16 +241,16 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
             <CardTitle className="text-sm font-bold text-slate-800">{t('odontogram.title')}</CardTitle>
             <CardDescription className="text-xs flex items-center gap-1.5">
               <MousePointerClick className="h-3.5 w-3.5" />
-              Touchez une dent pour la sélectionner, ou directement une face (vue occlusale) pour la marquer
+              {t('odontogram.clickHint')}
             </CardDescription>
           </CardHeader>
           {/* Dental charts keep anatomical orientation even in RTL (Arabic) */}
           <CardContent dir="ltr" className="p-3 sm:p-5 overflow-x-auto">
             <div className="mx-auto w-max min-w-full">
               <div className="flex justify-between px-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                <span>Droite patient</span>
-                <span>Maxillaire</span>
-                <span>Gauche patient</span>
+                <span>{t('odontogram.patientRight')}</span>
+                <span>{t('odontogram.maxilla')}</span>
+                <span>{t('odontogram.patientLeft')}</span>
               </div>
 
               {isAdult
@@ -264,7 +264,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                 : renderArch(CHILD_LOWER_RIGHT, CHILD_LOWER_LEFT, false)}
 
               <div className="mt-1 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                Mandibule
+                {t('odontogram.mandible')}
               </div>
             </div>
           </CardContent>
@@ -279,7 +279,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                   {selectedTooth ? `${t('odontogram.selectedTooth')} ${selectedTooth}` : t('odontogram.selectedTooth')}
                 </CardTitle>
                 <CardDescription className="text-xs">
-                  {selectedTooth ? 'Aperçu en direct avant enregistrement' : 'Sélectionnez une dent sur le schéma'}
+                  {selectedTooth ? t('odontogram.livePreview') : t('odontogram.selectToothPrompt')}
                 </CardDescription>
               </div>
               {selectedTooth && teethData[selectedTooth] && (
@@ -301,7 +301,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                     scale={2.4}
                     showNumber={false}
                     surfaceLabel={surfaceLabel}
-                    ariaLabel={`Aperçu dent ${selectedTooth}`}
+                    ariaLabel={`${t('odontogram.selectedTooth')} ${selectedTooth}`}
                     onSurfaceClick={
                       readOnly
                         ? undefined
@@ -315,7 +315,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
 
                 <div className="space-y-1.5">
                   <Label htmlFor="tooth-state" className="text-xs font-semibold text-slate-700">
-                    État clinique
+                    {t('odontogram.clinicalState')}
                   </Label>
                   <select
                     id="tooth-state"
@@ -334,7 +334,9 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
 
                 {showMaterial && (
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-700">Matériau</Label>
+                    <Label className="text-xs font-semibold text-slate-700">
+                      {t('odontogram.material')}
+                    </Label>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       {materialOptions.map((material) => (
                         <button
@@ -342,19 +344,13 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                           type="button"
                           disabled={readOnly}
                           onClick={() => setSelectedMaterial(material)}
-                          className={`rounded-lg border p-2 font-medium capitalize transition-colors ${
+                          className={`rounded-lg border p-2 font-medium transition-colors ${
                             selectedMaterial === material
                               ? 'border-teal-500 bg-teal-50 text-teal-800'
                               : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                           }`}
                         >
-                          {material === 'composite'
-                            ? 'Composite'
-                            : material === 'amalgam'
-                            ? 'Amalgame'
-                            : material === 'ceramic'
-                            ? 'Céramique'
-                            : 'Métal / Or'}
+                          {t(`odontogram.materials.${material}`)}
                         </button>
                       ))}
                     </div>
@@ -363,7 +359,9 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
 
                 {isSurfaceState(selectedState) && (
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-700">Faces concernées</Label>
+                    <Label className="text-xs font-semibold text-slate-700">
+                      {t('odontogram.affectedSurfaces')}
+                    </Label>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       {EDITABLE_SURFACES.map((surface) => {
                         const isChecked = draftSurfaces.includes(surface);
@@ -391,7 +389,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
 
                 <div className="space-y-1.5">
                   <Label htmlFor="tooth-notes" className="text-xs font-semibold text-slate-700">
-                    Observations / Diagnostic
+                    {t('odontogram.observations')}
                   </Label>
                   <textarea
                     id="tooth-notes"
@@ -399,7 +397,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                     disabled={readOnly}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Ex: Carie juxta-gingivale, sensibilité au froid..."
+                    placeholder={t('odontogram.observationsPlaceholder')}
                     className="w-full rounded-md border border-slate-300 p-2 text-xs focus:border-teal-500 focus:outline-none"
                   />
                 </div>
@@ -407,7 +405,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                 {!readOnly && (
                   <Button onClick={handleApplyToothState} className="w-full font-semibold text-xs py-2 shadow-sm">
                     <Save className="w-4 h-4 me-1.5" />
-                    <span>Enregistrer la dent {selectedTooth}</span>
+                    <span>{t('odontogram.saveTooth', { tooth: selectedTooth })}</span>
                   </Button>
                 )}
 
@@ -416,7 +414,7 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                     role="status"
                     className="p-2 text-center text-xs font-semibold text-emerald-800 bg-emerald-50 rounded-lg border border-emerald-200"
                   >
-                    Modifications enregistrées
+                    {t('odontogram.savedChanges')}
                   </div>
                 )}
 
@@ -424,15 +422,15 @@ export const OdontogramView: React.FC<OdontogramProps> = ({
                   <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 space-y-1">
                     <div className="flex items-center gap-1 font-semibold text-slate-700">
                       <History className="w-3.5 h-3.5 text-slate-400" />
-                      <span>Dernière mise à jour</span>
+                      <span>{t('odontogram.lastUpdated')}</span>
                     </div>
-                    <p>Par {teethData[selectedTooth].updatedBy}</p>
+                    <p>{t('odontogram.updatedBy', { author: teethData[selectedTooth].updatedBy })}</p>
                   </div>
                 )}
               </>
             ) : (
               <div className="text-center py-8 text-slate-400 text-xs">
-                Touchez une dent sur le schéma pour saisir un diagnostic
+                {t('odontogram.touchToothPrompt')}
               </div>
             )}
           </CardContent>

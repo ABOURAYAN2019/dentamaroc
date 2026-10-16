@@ -68,7 +68,7 @@ export const Sidebar: React.FC = () => {
       {/* Navigation links */}
       <div className="p-3 space-y-1">
         <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-          Navigation Principale
+          {t('nav.mainNav')}
         </div>
         {navigationItems
           .filter((item) => item.show)
@@ -113,8 +113,11 @@ export const Sidebar: React.FC = () => {
           </span>
         </div>
         <p className="text-[11px] text-slate-500 leading-snug">
-          Conformité {appConfig.regional.regulatoryLaw} ({appConfig.regional.regulatoryAuthority}) •{' '}
-          {appConfig.regional.timezone}
+          {t('nav.complianceNotice', {
+            law: appConfig.regional.regulatoryLaw,
+            authority: appConfig.regional.regulatoryAuthority,
+          })}{' '}
+          • {appConfig.regional.timezone}
         </p>
       </div>
     </aside>
