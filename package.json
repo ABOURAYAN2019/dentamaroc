@@ -4,6 +4,14 @@
   "description": "Open-source dental clinic management SaaS (Odontogram SVG, Agenda, Billing, Prescriptions & CNDP/GDPR compliance)",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://github.com/ABOURAYAN2019/dentamaroc#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ABOURAYAN2019/dentamaroc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ABOURAYAN2019/dentamaroc/issues"
+  },
   "keywords": [
     "dental",
     "odontogram",
@@ -14,7 +22,8 @@
     "firebase",
     "morocco",
     "cndp",
-    "rtl"
+    "rtl",
+    "i18n"
   ],
   "engines": {
     "node": ">=18.0.0",
@@ -28,6 +37,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "seed": "node scripts/seed-firestore.mjs",
     "validate": "npm run typecheck && npm test && npm run build",
     "emulators": "firebase emulators:start --only auth,firestore,storage,functions"
   },

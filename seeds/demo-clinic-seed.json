@@ -1,0 +1,301 @@
+{
+  "_meta": {
+    "description": "Jeu de données de démonstration 100% fictif pour DentaMaroc (Conformité CNDP Loi 09-08 — Aucune donnée réelle de patient)",
+    "schemaVersion": "0.2.0",
+    "clinicId": "clinic-casa-01",
+    "generatedAt": "2026-10-16T08:00:00Z"
+  },
+  "clinic": {
+    "id": "clinic-casa-01",
+    "name": "Cabinet Dentaire Dr. Amine TAZI",
+    "licenseNumber": "INPE-78945612",
+    "ice": "001548792000034",
+    "address": {
+      "street": "14 Boulevard d'Anfa, 3ème étage, N° 12",
+      "city": "Casablanca",
+      "postalCode": "20000"
+    },
+    "phones": ["+212 5 22 20 40 60", "+212 6 61 30 50 70"],
+    "email": "contact@cabinet-tazi.ma",
+    "settings": {
+      "currency": "MAD",
+      "timezone": "Africa/Casablanca",
+      "defaultLanguage": "fr",
+      "appointmentSlotDuration": 30,
+      "workHours": [
+        { "dayOfWeek": 1, "start": "09:00", "end": "18:00" },
+        { "dayOfWeek": 2, "start": "09:00", "end": "18:00" },
+        { "dayOfWeek": 3, "start": "09:00", "end": "18:00" },
+        { "dayOfWeek": 4, "start": "09:00", "end": "18:00" },
+        { "dayOfWeek": 5, "start": "09:00", "end": "18:00" },
+        { "dayOfWeek": 6, "start": "09:00", "end": "13:00" }
+      ]
+    }
+  },
+  "users": [
+    {
+      "id": "user-dentist-1",
+      "email": "dr.tazi@cabinet-tazi.ma",
+      "fullName": "Dr. Amine TAZI",
+      "role": "dentist",
+      "phone": "+212661305070",
+      "clinicId": "clinic-casa-01",
+      "active": true,
+      "colorCode": "#0d9488"
+    },
+    {
+      "id": "user-assistant-1",
+      "email": "fatima@cabinet-tazi.ma",
+      "fullName": "Fatima Zohra BENJELLOUN",
+      "role": "assistant",
+      "phone": "+212662445566",
+      "clinicId": "clinic-casa-01",
+      "active": true,
+      "colorCode": "#0284c7"
+    },
+    {
+      "id": "user-secretary-1",
+      "email": "nadia@cabinet-tazi.ma",
+      "fullName": "Nadia IDRISSI",
+      "role": "secretary",
+      "phone": "+212663778899",
+      "clinicId": "clinic-casa-01",
+      "active": true,
+      "colorCode": "#e11d48"
+    }
+  ],
+  "procedures": [
+    {
+      "id": "proc-1",
+      "code": "CONS-01",
+      "category": "consultation",
+      "nameFr": "Consultation & Bilan Bucco-Dentaire",
+      "nameAr": "فحص وتشخيص أولي",
+      "defaultPrice": 300,
+      "color": "#0d9488",
+      "active": true
+    },
+    {
+      "id": "proc-2",
+      "code": "DET-01",
+      "category": "prevention",
+      "nameFr": "Détartrage & Polissage (Haut & Bas)",
+      "nameAr": "إزالة الجير وصقل الأسنان",
+      "defaultPrice": 500,
+      "color": "#0284c7",
+      "active": true
+    },
+    {
+      "id": "proc-3",
+      "code": "OBT-01",
+      "category": "conservative",
+      "nameFr": "Obturation composite 1 face",
+      "nameAr": "حشوة مركبة وجه واحد",
+      "defaultPrice": 450,
+      "color": "#ca8a04",
+      "active": true
+    },
+    {
+      "id": "proc-4",
+      "code": "OBT-02",
+      "category": "conservative",
+      "nameFr": "Obturation composite 2 faces",
+      "nameAr": "حشوة مركبة وجهين",
+      "defaultPrice": 600,
+      "color": "#ca8a04",
+      "active": true
+    },
+    {
+      "id": "proc-5",
+      "code": "ENDO-01",
+      "category": "endodontics",
+      "nameFr": "Traitement endodontique molaire (Dévitalisation)",
+      "nameAr": "علاج جذور ضرس",
+      "defaultPrice": 1200,
+      "color": "#e11d48",
+      "active": true
+    },
+    {
+      "id": "proc-6",
+      "code": "EXT-01",
+      "category": "surgery",
+      "nameFr": "Extraction simple dent permanente",
+      "nameAr": "قلع سن بسيط",
+      "defaultPrice": 400,
+      "color": "#7c3aed",
+      "active": true
+    },
+    {
+      "id": "proc-7",
+      "code": "EXT-02",
+      "category": "surgery",
+      "nameFr": "Extraction chirurgicale dent de sagesse incluse",
+      "nameAr": "قلع جراحي لضرس العقل",
+      "defaultPrice": 1500,
+      "color": "#7c3aed",
+      "active": true
+    },
+    {
+      "id": "proc-8",
+      "code": "PROTH-01",
+      "category": "prosthetics",
+      "nameFr": "Couronne Céramo-Métallique (CCM)",
+      "nameAr": "تاج خزفي معدني",
+      "defaultPrice": 2200,
+      "color": "#ea580c",
+      "active": true
+    },
+    {
+      "id": "proc-9",
+      "code": "PROTH-02",
+      "category": "prosthetics",
+      "nameFr": "Couronne tout-céramique Zircone",
+      "nameAr": "تاج زركونيا كامل",
+      "defaultPrice": 3500,
+      "color": "#ea580c",
+      "active": true
+    },
+    {
+      "id": "proc-10",
+      "code": "IMP-01",
+      "category": "implantology",
+      "nameFr": "Pose implant titane (phase chirurgicale)",
+      "nameAr": "وضع غرسة تيتانيوم",
+      "defaultPrice": 7000,
+      "color": "#059669",
+      "active": true
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat-1",
+      "nationalId": "BE874125",
+      "firstName": "Karim",
+      "lastName": "BENNANI",
+      "birthDate": "1988-04-12",
+      "gender": "M",
+      "phone": "+212661234567",
+      "email": "k.bennani@example.ma",
+      "address": "Résidence Al Manar, Maarif",
+      "city": "Casablanca",
+      "medicalHistory": {
+        "allergies": ["Pénicilline"],
+        "conditions": ["Hypertension artérielle"],
+        "notes": "Prend Amlor 5mg quotidiennement. Attention anesthésie sans vasoconstricteur si poussée.",
+        "bloodGroup": "O+"
+      },
+      "consent": {
+        "granted": true,
+        "timestamp": "2026-01-10T10:00:00Z",
+        "signedBy": "patient",
+        "notes": "Signé électroniquement lors de la première consultation."
+      },
+      "financialSummary": {
+        "totalInvoiced": 4200,
+        "totalPaid": 3000,
+        "balance": 1200
+      }
+    },
+    {
+      "id": "pat-2",
+      "nationalId": "BK332910",
+      "firstName": "Yasmine",
+      "lastName": "EL ALAMI",
+      "birthDate": "1995-09-24",
+      "gender": "F",
+      "phone": "+212662987654",
+      "email": "yasmine.alami@example.ma",
+      "address": "Gauthier, Rue Jean Jaurès",
+      "city": "Casablanca",
+      "medicalHistory": {
+        "allergies": ["Latex"],
+        "conditions": [],
+        "notes": "Gants vinyle/nitrile obligatoires.",
+        "bloodGroup": "A+"
+      },
+      "consent": {
+        "granted": true,
+        "timestamp": "2026-03-15T11:15:00Z",
+        "signedBy": "patient"
+      },
+      "financialSummary": {
+        "totalInvoiced": 2200,
+        "totalPaid": 2200,
+        "balance": 0
+      }
+    },
+    {
+      "id": "pat-3",
+      "nationalId": "BJ654321",
+      "firstName": "Omar",
+      "lastName": "CHRAIBI",
+      "birthDate": "2016-06-18",
+      "gender": "M",
+      "phone": "+212663112233",
+      "address": "Bourgogne",
+      "city": "Casablanca",
+      "medicalHistory": {
+        "allergies": [],
+        "conditions": ["Asthme léger"],
+        "notes": "Ventoline dans le sac en cas de besoin.",
+        "bloodGroup": "B+"
+      },
+      "consent": {
+        "granted": true,
+        "timestamp": "2026-05-20T16:00:00Z",
+        "signedBy": "guardian",
+        "notes": "Signé par la mère Mme Chraibi Salma."
+      },
+      "financialSummary": {
+        "totalInvoiced": 850,
+        "totalPaid": 850,
+        "balance": 0
+      }
+    },
+    {
+      "id": "pat-4",
+      "nationalId": "BL981244",
+      "firstName": "Souad",
+      "lastName": "TAHIRI",
+      "birthDate": "1974-11-03",
+      "gender": "F",
+      "phone": "+212664556677",
+      "email": "souad.tahiri@example.ma",
+      "address": "Ain Diab",
+      "city": "Casablanca",
+      "medicalHistory": {
+        "allergies": [],
+        "conditions": ["Diabète Type 2", "Anticoagulants (Sintrom)"],
+        "notes": "Vérifier INR avant tout acte sanglant. Dernier INR = 2.1.",
+        "bloodGroup": "AB+"
+      },
+      "consent": {
+        "granted": true,
+        "timestamp": "2026-08-01T10:00:00Z",
+        "signedBy": "patient"
+      },
+      "financialSummary": {
+        "totalInvoiced": 8200,
+        "totalPaid": 5000,
+        "balance": 3200
+      }
+    }
+  ],
+  "toothCharts": [
+    {
+      "id": "chart-pat-1",
+      "patientId": "pat-1",
+      "type": "adult",
+      "teeth": {
+        "16": { "state": "caries", "surfaces": ["occlusal", "mesial"], "notes": "Carie profonde émail-dentine", "updatedBy": "Dr. Amine TAZI" },
+        "26": { "state": "crown", "material": "ceramic", "notes": "Couronne céramique scellée", "updatedBy": "Dr. Amine TAZI" },
+        "36": { "state": "root_canal", "notes": "Dévitalisation 2 racines terminée", "updatedBy": "Dr. Amine TAZI" },
+        "46": { "state": "filling", "material": "composite", "surfaces": ["occlusal", "distal"], "notes": "Composite", "updatedBy": "Dr. Amine TAZI" },
+        "37": { "state": "filling", "material": "amalgam", "surfaces": ["occlusal"], "notes": "Ancien amalgame", "updatedBy": "Dr. Amine TAZI" },
+        "24": { "state": "implant", "notes": "Implant posé en 2025", "updatedBy": "Dr. Amine TAZI" },
+        "48": { "state": "missing", "notes": "Dent de sagesse extraite en 2024", "updatedBy": "Dr. Amine TAZI" },
+        "18": { "state": "extraction_indicated", "notes": "Dent de sagesse en malposition", "updatedBy": "Dr. Amine TAZI" }
+      }
+    }
+  ]
+}
