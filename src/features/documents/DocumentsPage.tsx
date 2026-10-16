@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/features/auth/AuthContext';
 import { DEMO_PATIENTS, DEMO_CLINIC } from '@/features/auth/demoData';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { formatDateMA, calculateAge } from '@/lib/date-utils';
 import { jsPDF } from 'jspdf';
 import {
-  FileText,
   Printer,
-  Plus,
   Trash2,
-  Stethoscope,
-  Award,
-  Download,
-  CheckCircle2,
 } from 'lucide-react';
 
 interface PrescriptionItem {
@@ -39,7 +31,6 @@ const COMMON_DRUGS = [
 
 export const DocumentsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { isDentist, user } = useAuth();
 
   const [documentType, setDocumentType] = useState<'prescription' | 'certificate'>('prescription');
   const [selectedPatientId, setSelectedPatientId] = useState<string>(DEMO_PATIENTS[0].id);

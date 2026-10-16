@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/features/auth/AuthContext';
 import { DEMO_PROCEDURES, DEMO_CLINIC } from '@/features/auth/demoData';
 import {
   TreatmentPlan,
@@ -18,14 +16,8 @@ import { formatMAD } from '@/lib/formatters';
 import { formatDateMA } from '@/lib/date-utils';
 import { jsPDF } from 'jspdf';
 import {
-  FileText,
   PlusCircle,
-  CheckCircle,
-  Clock,
   Printer,
-  Trash2,
-  CheckCircle2,
-  Download,
 } from 'lucide-react';
 
 interface TreatmentPlansViewProps {
@@ -33,8 +25,6 @@ interface TreatmentPlansViewProps {
 }
 
 export const TreatmentPlansView: React.FC<TreatmentPlansViewProps> = ({ patient }) => {
-  const { t } = useTranslation();
-  const { isDentist, user } = useAuth();
 
   const [plans, setPlans] = useState<TreatmentPlan[]>([
     {
@@ -202,7 +192,7 @@ export const TreatmentPlansView: React.FC<TreatmentPlansViewProps> = ({ patient 
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(40);
 
-    plan.items.forEach((item, index) => {
+    plan.items.forEach((item) => {
       doc.text(item.toothNumber ? `#${item.toothNumber}` : '-', 18, y);
       doc.text(item.procedureName, 40, y);
       doc.text(formatMAD(item.price), 160, y);

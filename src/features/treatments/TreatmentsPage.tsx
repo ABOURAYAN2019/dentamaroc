@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth/AuthContext';
 import { DEMO_PROCEDURES } from '@/features/auth/demoData';
 import { ProcedureCatalogItem, ProcedureCategory } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogCloseButton } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { formatMAD } from '@/lib/formatters';
-import { Plus, Search, Edit2, CheckCircle2, Layers } from 'lucide-react';
+import { Plus, Search, Edit2 } from 'lucide-react';
 
 export const TreatmentsPage: React.FC = () => {
-  const { t } = useTranslation();
   const { isDentist } = useAuth();
 
   const [procedures, setProcedures] = useState<ProcedureCatalogItem[]>(DEMO_PROCEDURES);

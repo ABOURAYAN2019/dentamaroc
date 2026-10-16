@@ -17,7 +17,6 @@ import {
   Users,
   TrendingUp,
   AlertCircle,
-  PlusCircle,
   CreditCard,
   MessageCircle,
   Clock,
@@ -29,7 +28,7 @@ import { AppointmentStatus } from '@/types';
 
 export const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
-  const { user, isDentist, isBillingStaff } = useAuth();
+  const { user, isBillingStaff } = useAuth();
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState(DEMO_APPOINTMENTS);

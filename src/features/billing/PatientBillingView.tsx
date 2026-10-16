@@ -12,12 +12,7 @@ import { formatDateMA } from '@/lib/date-utils';
 import { jsPDF } from 'jspdf';
 import {
   CreditCard,
-  PlusCircle,
   Printer,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  Receipt,
   FileCheck,
 } from 'lucide-react';
 import { useAuth } from '@/features/auth/AuthContext';
@@ -27,7 +22,7 @@ interface PatientBillingViewProps {
 }
 
 export const PatientBillingView: React.FC<PatientBillingViewProps> = ({ patient }) => {
-  const { user, isDentist, isSecretary } = useAuth();
+  const { user } = useAuth();
 
   const [invoices, setInvoices] = useState<Invoice[]>(() =>
     DEMO_INVOICES.filter((inv) => inv.patientId === patient.id)

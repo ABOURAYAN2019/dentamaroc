@@ -4,8 +4,9 @@ import { RoleSwitcher } from '@/features/auth/RoleSwitcher';
 import { useTranslation } from 'react-i18next';
 import { LogOut, Globe, Building2 } from 'lucide-react';
 import { DEMO_CLINIC } from '@/features/auth/demoData';
+import { appConfig } from '@/config/app.config';
 
-export const Navbar: React.FC<{ onMenuToggle?: () => void }> = () => {
+export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { i18n } = useTranslation();
 
@@ -26,14 +27,15 @@ export const Navbar: React.FC<{ onMenuToggle?: () => void }> = () => {
             {DEMO_CLINIC.name}
           </h2>
           <p className="text-xs text-slate-500">
-            {DEMO_CLINIC.address.city} • <span className="text-teal-700 font-semibold">{DEMO_CLINIC.licenseNumber}</span>
+            {DEMO_CLINIC.address.city} •{' '}
+            <span className="text-teal-700 font-semibold">{DEMO_CLINIC.licenseNumber}</span>
           </p>
         </div>
       </div>
 
       {/* Role switcher & utilities */}
       <div className="flex items-center gap-2 sm:gap-3">
-        <RoleSwitcher />
+        {appConfig.app.enableRoleSwitcher && <RoleSwitcher />}
 
         {/* Language switch */}
         <button
@@ -51,9 +53,7 @@ export const Navbar: React.FC<{ onMenuToggle?: () => void }> = () => {
             <div className="text-xs font-semibold text-slate-900 leading-none">
               {user?.fullName}
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
-              {user?.email}
-            </div>
+            <div className="text-[11px] text-slate-500 mt-0.5">{user?.email}</div>
           </div>
 
           <button

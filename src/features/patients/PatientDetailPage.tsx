@@ -19,11 +19,7 @@ import {
   Mail,
   MapPin,
   AlertTriangle,
-  ShieldCheck,
   Calendar,
-  Layers,
-  Receipt,
-  FileText,
   Lock,
 } from 'lucide-react';
 
@@ -31,7 +27,7 @@ export const PatientDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { isClinicalStaff, isSecretary, isDentist } = useAuth();
+  const { isClinicalStaff } = useAuth();
 
   const patient = DEMO_PATIENTS.find((p) => p.id === id) || DEMO_PATIENTS[0];
   const age = calculateAge(patient.birthDate);

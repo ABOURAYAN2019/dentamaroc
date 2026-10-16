@@ -10,14 +10,13 @@ import {
   Receipt,
   FileText,
   Settings,
-  Sparkles,
-  Activity,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { appConfig } from '@/config/app.config';
 
 export const Sidebar: React.FC = () => {
   const { t } = useTranslation();
-  const { isDentist, isAssistant, isBillingStaff, isClinicalStaff } = useAuth();
+  const { isDentist, isBillingStaff, isClinicalStaff } = useAuth();
 
   const navigationItems = [
     {
@@ -42,13 +41,13 @@ export const Sidebar: React.FC = () => {
       to: '/treatments',
       label: t('nav.treatments'),
       icon: Layers,
-      show: isClinicalStaff, // Only Dentist and Assistant
+      show: isClinicalStaff,
     },
     {
       to: '/billing',
       label: t('nav.billing'),
       icon: Receipt,
-      show: isBillingStaff || isDentist, // Dentist and Secretary
+      show: isBillingStaff || isDentist,
     },
     {
       to: '/documents',
@@ -60,7 +59,7 @@ export const Sidebar: React.FC = () => {
       to: '/settings',
       label: t('nav.settings'),
       icon: Settings,
-      show: isDentist, // Only Dentist (Admin)
+      show: isDentist,
     },
   ];
 
@@ -105,14 +104,17 @@ export const Sidebar: React.FC = () => {
           })}
       </div>
 
-      {/* Footer info: CNDP & Version */}
+      {/* Footer info: Compliance & Version */}
       <div className="p-4 border-t border-slate-100 bg-slate-50/70">
         <div className="flex items-center gap-2 mb-2">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-semibold text-slate-700">DentaMaroc MVP v0.1</span>
+          <span className="text-xs font-semibold text-slate-700">
+            {appConfig.app.name} v{appConfig.app.version}
+          </span>
         </div>
         <p className="text-[11px] text-slate-500 leading-snug">
-          Conformité Loi 09-08 (CNDP) • Heure Maroc (UTC+1)
+          Conformité {appConfig.regional.regulatoryLaw} ({appConfig.regional.regulatoryAuthority}) •{' '}
+          {appConfig.regional.timezone}
         </p>
       </div>
     </aside>

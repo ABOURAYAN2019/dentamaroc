@@ -17,7 +17,6 @@ import {
   UserPlus,
   AlertTriangle,
   Phone,
-  FileCheck,
   ChevronRight,
   ShieldCheck,
   CreditCard,
@@ -25,7 +24,7 @@ import {
 
 export const PatientsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { isDentist, isAssistant, isSecretary } = useAuth();
+  const { isSecretary } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 

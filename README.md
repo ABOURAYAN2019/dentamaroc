@@ -1,194 +1,145 @@
-# 🦷 DentaMaroc — Plateforme SaaS de Gestion de Cabinet Dentaire (Maroc)
+# 🦷 DentaMaroc — Plateforme Open-Source de Gestion de Cabinet Dentaire
 
-**DentaMaroc** est une application SaaS médicale tout-en-un, spécialement conçue pour les cabinets dentaires au Maroc (praticien solo ou cabinets de 1 à 3 praticiens). Elle est utilisable de manière fluide sur ordinateur et sur tablette au fauteuil.
+[![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](./LICENSE)
+[![TypeScript: Strict](https://img.shields.io/badge/TypeScript-5.7%20Strict-blue.svg)](./tsconfig.app.json)
+[![React: 18.3](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://react.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Functions-ffca28.svg)](./firebase.json)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
----
-
-## 📋 Table des Matières
-- [1. Stack Technique](#1-stack-technique)
-- [2. Spécificités Maroc & Conformité CNDP (Loi 09-08)](#2-spécificités-maroc--conformité-cndp-loi-09-08)
-- [3. Périmètre MVP Réalisé](#3-périmètre-mvp-réalisé)
-- [4. Matrice RBAC (Rôles & Permissions)](#4-matrice-rbac-rôles--permissions)
-- [5. Installation & Démarrage Local](#5-installation--démarrage-local)
-- [6. Tests & Validation](#6-tests--validation)
-- [7. Déploiement Firebase en Production](#7-déploiement-firebase-en-production)
-- [8. Roadmap V1 (Post-MVP)](#8-roadmap-v1-post-mvp)
+**DentaMaroc** est une solution SaaS médicale **open-source**, modulaire et entièrement configurable, conçue pour les cabinets dentaires (praticien solo ou cabinets de 1 à 3 praticiens). Pensée nativement pour le contexte marocain (**MAD**, **+212**, **Loi 09-08 / CNDP**, **Français & Arabe RTL**), elle peut être adaptée en quelques secondes à tout autre pays ou cabinet tiers grâce à sa configuration centralisée par variables d'environnement.
 
 ---
 
-## 1. Stack Technique
+## 📚 Documentation du Projet
 
-### Frontend
-- **Framework** : React 18 + Vite + TypeScript (mode strict)
-- **Styling & UI** : Tailwind CSS + composants inspirés de shadcn/ui (thème médical Teal `#0d9488`)
-- **Routage** : React Router v6 avec gardes d'authentification (`AuthGuard`) et de permissions (`RoleGuard`)
-- **State Management & Requêtes** : TanStack Query v5 + Context API
-- **Formulaires & Schémas** : React Hook Form + Zod
-- **Dates & Localisation** : `date-fns` (fuseau horaire `Africa/Casablanca`, format `JJ/MM/AAAA`)
-- **Internationalisation & RTL** : `i18next` avec bascule instantanée Français / Arabe avec support natif RTL et polices Google Fonts (*Inter* pour le français, *Cairo* pour l'arabe)
-- **Export PDF** : `jspdf` pour devis dentaires, factures acquittées, ordonnances et certificats médicaux
-- **PWA & Offline** : `vite-plugin-pwa` + persistance IndexedDB Firestore pour la consultation hors ligne
-
-### Backend & Cloud
-- **Firebase Auth** : Authentification par email/mot de passe avec Custom Claims (`role`, `clinicId`)
-- **Cloud Firestore** : Base de données NoSQL multi-tenant sous `clinics/{clinicId}/...` en région `europe-west9` (Paris)
-- **Firebase Storage** : Stockage sécurisé des pièces jointes, radios panoramiques/rétro-alvéolaires et photos cliniques
-- **Cloud Functions TypeScript** :
-  - `setUserClaims` : Attribution sécurisée des rôles
-  - `prepareDailyReminders` : Tâche planifiée Cloud Scheduler (tous les jours à 18h) pour préparer les rappels WhatsApp du lendemain
-  - `onPatientModified` : Déclencheur d'audit immuable CNDP
-- **Firebase Emulator Suite** : Auth (9099), Firestore (8080), Storage (9199), Functions (5001), UI (4000)
+- 🏗️ [**Architecture Technique & Odontogramme SVG (`docs/ARCHITECTURE.md`)**](./docs/ARCHITECTURE.md)
+- 🤝 [**Guide de Contribution (`CONTRIBUTING.md`)**](./CONTRIBUTING.md)
+- 🔒 [**Politique de Sécurité & Conformité Santé (`SECURITY.md`)**](./SECURITY.md)
+- 📝 [**Journal des Versions (`CHANGELOG.md`)**](./CHANGELOG.md)
+- ⚖️ [**Licence MIT (`LICENSE`)**](./LICENSE)
 
 ---
 
-## 2. Spécificités Maroc & Conformité CNDP (Loi 09-08)
+## ⚡ Démarrage Rapide en 60 Secondes (Zero-Config Demo Mode)
 
-### 🇲🇦 Paramètres Régionaux Marocains
-- **Monnaie** : Dirham Marocain (`MAD` / `DH`), formaté avec séparateur de milliers et centimes (ex: `1 250,00 MAD`).
-- **Dates** : Format officiel marocain `JJ/MM/AAAA` (ex: `14/10/2026`).
-- **Fuseau horaire** : `Africa/Casablanca` (UTC+1).
-- **Téléphones** : Validation et formatage des numéros mobiles marocains `+212 6XX XX XX XX` ou format national `06 XX XX XX XX`.
-- **Identifiants nationaux** : Intégration de la **CIN** (Carte d'Identité Nationale), de l'**ICE** (Identifiant Commun de l'Entreprise) et du **N° INPE / Ordre National des Médecins Dentistes**.
+Aucune clé Firebase n'est requise pour tester l'application localement : un jeu de données fictives complet et un commutateur de rôle en 1 clic (`Dentiste`, `Assistante`, `Secrétaire`) sont intégrés.
 
-### 🔒 Conformité CNDP (Commission Nationale de contrôle de protection des Données à caractère Personnel)
-1. **Consentement Éclairé Horodaté** : Chaque fiche patient consigne le consentement exprès du patient ou de son tuteur légal, horodaté et signé électroniquement lors de l'ouverture du dossier.
-2. **Journal d'Audit Immuable** : Traçabilité complète de tout accès, lecture, modification ou suppression d'un dossier médical dans la sous-collection `auditLogs`. Les règles Firestore interdisent formellement la modification ou la suppression des logs par les clients.
-3. **Droit à l'Effacement (Suppression Définitive)** : Réservé exclusivement au Chirurgien-Dentiste responsable légal.
-4. **Droit à la Portabilité (Export)** : Bouton en 1-clic pour exporter l'intégralité du dossier d'un patient au format standard JSON.
-5. **Hébergement Hors du Maroc (Avis Juridique & CNDP)** :
-   > ⚠️ **IMPORTANT** : La base Firestore et le Storage sont provisionnés sur la région `europe-west9` (Paris, France), offrant une latence de 25 à 35 ms depuis le Maroc. Conformément aux dispositions de l'article 43 et suivants de la **loi 09-08**, le transfert de données de santé à caractère personnel vers un serveur situé à l'étranger nécessite **une autorisation préalable de transfert de la CNDP** avant toute mise en production avec des données de patients réels.
+```bash
+# 1. Cloner le dépôt et installer les dépendances
+git clone <url-du-repo>
+cd brave-turing
+npm install
+
+# 2. Copier la configuration par défaut (Optionnel)
+cp .env.example .env
+
+# 3. Lancer l'application en mode développement
+npm run dev
+```
+
+Ouvrez `http://localhost:3000` dans votre navigateur.
 
 ---
 
-## 3. Périmètre MVP Réalisé
+## ✨ Fonctionnalités Principales
 
 | Module | Fonctionnalités Clés |
 | :--- | :--- |
-| **1. Auth & Rôles** | Multi-cabinet (`clinicId`), Custom Claims, 3 rôles (Dentiste, Assistante, Secrétaire), commutateur de test rapide 1-clic. |
-| **2. Patients** | Recherche instantanée par Nom, CIN ou Téléphone (+212), filtres débiteurs, questionnaire médical & alertes (allergies, cardiopathies, Sintrom), consentement CNDP, export JSON. |
-| **3. Agenda & RDV** | Vues Jour et Semaine, multi-praticiens, statuts de RDV tactiles (Planifié, Arrivé, Fauteuil, Terminé), **détection automatique de conflit de créneau**, bouton WhatsApp direct (`wa.me`). |
-| **4. Odontogramme SVG** | Denture adulte (32 dents) et enfant (20 dents) en notation **FDI**, rendu vectoriel des 5 faces par dent (occlusale, vestibulaire, linguale, mésiale, distale), 8 états pathologiques (carie, obturation, couronne, dévitalisée, implant, absente...). |
-| **5. Actes & Devis** | Catalogue bilingue d'actes dentaires éditable en MAD, plan de traitement par dent, suivi d'avancement des séances, **génération de devis estimatif en PDF**. |
-| **6. Facturation & Caisse** | Factures d'honoraires, paiements échelonnés (espèces, carte TPE CMI, chèque, virement), suivi du solde patient, **clôture de caisse journalière (Z de caisse PDF)**, gestion des dépenses espèces. |
-| **7. Documents Médicaux** | Ordonnances dentaires avec catalogue de médicaments fréquents (antibiotiques, antalgiques, bains de bouche), certificats d'arrêt de travail, export PDF avec en-tête légal du cabinet. |
-| **8. Rappels WhatsApp** | Liens direct WhatsApp Web avec message personnalisé pré-rempli, Cloud Function planifiée pour la liste du lendemain. |
-| **9. Tableau de Bord** | KPI du jour (patients attendus, en salle d'attente, au fauteuil), CA mensuel (MAD), impayés, timeline interactive du jour. |
-| **10. Paramètres & Équipe** | Profil du cabinet, gestion de l'équipe et des invitations, bascule instantanée Français / Arabe (RTL). |
+| **1. Odontogramme SVG Anatomique** | Denture adulte (**32 dents**) et enfant (**20 dents**) en notation **FDI**. Rendu vectoriel réaliste (incisives, canines, prémolaires 1-2 racines, molaires 2-3 racines, bande gingivale, reflets d'émail) + **vue occlusale interactive à 5 faces**. Rendu distinct des matériaux (Composite, Amalgame, Couronne Céramique ou Or, Vis d'implant en titane, Endodontie par canal). |
+| **2. Dossiers Patients 360° & CNDP** | Recherche instantanée par Nom, CIN ou Téléphone, filtres débiteurs, alertes médicales critiques (allergies, anticoagulants, HTA), consentement horodaté, journal d'audit immuable et export portable JSON. |
+| **3. Agenda Tactile & Conflits** | Vues Jour et Semaine, multi-praticiens, suivi temps réel (*Planifié → En salle d'attente → Au fauteuil → Terminé*), **détection automatique de chevauchement d'horaires**, rappels WhatsApp 1-clic (`wa.me`). |
+| **4. Actes, Plans & Devis PDF** | Catalogue bilingue d'actes dentaires éditable, plan de traitement par dent, barre de progression des soins et **génération de devis estimatif en PDF**. |
+| **5. Facturation & Clôture de Caisse** | Factures d'honoraires, paiements échelonnés (Espèces, Carte TPE, Chèque, Virement), gestion des dépenses espèces et **Clôture Journalière de Caisse (Z de caisse en PDF)** avec calcul automatique d'écart. |
+| **6. Ordonnances & Certificats PDF** | Prescriptions rapides avec catalogue de médicaments fréquents pré-dosés (antibiotiques, antalgiques, bains de bouche) et certificats médicaux d'arrêt de travail en PDF. |
+| **7. Multilingue FR / AR (RTL) & PWA** | Bascule instantanée Français / Arabe avec mise en page **RTL** native (tout en conservant l'orientation anatomique universelle de l'odontogramme) et support **PWA** hors-ligne. |
 
 ---
 
-## 4. Matrice RBAC (Rôles & Permissions)
+## ⚙️ Configuration & White-Labeling pour des Tiers (`.env`)
 
-```
-+------------------------------------+----------+------------+------------+
-| Ressource / Module                 | Dentiste | Assistante | Secrétaire |
-+------------------------------------+----------+------------+------------+
-| Configuration du Cabinet           |   CRUD   |  Lecture   |   Aucun    |
-| Dossier Patient (Identité/Contact) |   CRUD   |    CRUD    |    CRUD    |
-| Questionnaire Médical & Allergies  |   CRUD   |    CRUD    |   Masqué   |
-| Odontogramme SVG Interactif        |   CRUD   |    CRUD    |   Masqué   |
-| Plans de Traitement & Devis        |   CRUD   |    CRUD    |   Masqué   |
-| Factures & Encaissements           |   CRUD   |  Lecture   |    CRUD    |
-| Clôture de Caisse & Dépenses       |   CRUD   |   Aucun    |    CRUD    |
-| Ordonnances & Certificats          |   CRUD   |  Lecture   |   Aucun    |
-| Suppression Patient & Export CNDP  |   CRUD   |   Aucun    |   Aucun    |
-+------------------------------------+----------+------------+------------+
-```
+Toute la configuration régionale, le nom de la clinique/plateforme et le cadre réglementaire sont validés par **Zod** dans [`src/config/app.config.ts`](./src/config/app.config.ts). Vous pouvez adapter **DentaMaroc** à n'importe quel pays ou clinique sans toucher au code :
+
+| Variable `.env` | Défaut (Maroc) | Exemple (Tunisie) | Exemple (France / Europe) | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `VITE_APP_NAME` | `DentaMaroc` | `DentaTunis` | `DentaCloud` | Nom de l'application |
+| `VITE_DEFAULT_CURRENCY` | `MAD` | `TND` | `EUR` | Code devise affiché sur devis/factures |
+| `VITE_DEFAULT_LOCALE` | `fr-MA` | `fr-TN` | `fr-FR` | Locale de formatage numérique (`Intl`) |
+| `VITE_COUNTRY_DIAL_CODE` | `212` | `216` | `33` | Indicatif téléphonique international & WhatsApp |
+| `VITE_TIMEZONE` | `Africa/Casablanca` | `Africa/Tunis` | `Europe/Paris` | Fuseau horaire de l'agenda |
+| `VITE_DEFAULT_CITY` | `Casablanca` | `Tunis` | `Paris` | Ville par défaut des nouveaux dossiers |
+| `VITE_REGULATORY_AUTHORITY` | `CNDP` | `INPDP` | `CNIL` | Autorité de protection des données |
+| `VITE_REGULATORY_LAW` | `Loi 09-08` | `Loi 2004-63` | `RGPD` | Référence légale affichée sur les consentements |
+| `VITE_ENABLE_ROLE_SWITCHER` | `true` | `false` | `false` | Affiche/masque le sélecteur rapide de rôle en barre haute |
+| `VITE_FIREBASE_REGION` | `europe-west9` | `europe-west9` | `europe-west9` | Région Cloud Functions & Firestore |
 
 ---
 
-## 5. Installation & Démarrage Local
+## 🔐 Matrice RBAC (Rôles & Permissions)
 
-### Prérequis
-- Node.js version 18, 20 ou 22
-- npm version 10+
-- Java JRE/JDK 11+ (requis uniquement pour exécuter les émulateurs locaux Firebase)
+Les permissions sont appliquées à la fois côté interface (`RoleGuard`) et côté serveur ([`firestore.rules`](./firestore.rules) & [`storage.rules`](./storage.rules)) :
 
-### 1. Cloner et installer les dépendances
+| Ressource / Action | Dentiste (`dentist`) | Assistante (`assistant`) | Secrétaire (`secretary`) |
+| :--- | :---: | :---: | :---: |
+| **Paramètres du cabinet & Équipe** | CRUD | Lecture | Aucun accès |
+| **Patients — Identité & Contact** | CRUD | CRUD | CRUD |
+| **Patients — Antécédents & Allergies** | CRUD | CRUD | **Masqué** |
+| **Odontogramme SVG & Plans de soins** | CRUD | CRUD | **Masqué** |
+| **Ordonnances & Certificats PDF** | CRUD | Lecture / Impression | **Masqué** |
+| **Agenda & Rappels WhatsApp** | CRUD | CRUD | CRUD |
+| **Factures, Règlements & Caisse (Z)** | CRUD | Lecture seule | CRUD |
+| **Export CNDP & Suppression Patient** | **Autorisé** | Refusé | Refusé |
+
+---
+
+## 🧪 Commandes de Développement, Tests & Qualité
+
 ```bash
-git clone <url-du-repo>
-cd brave-turing
+# Lancer le serveur de développement Vite (HMR)
+npm run dev
 
-# Installer les dépendances du frontend
-npm install
+# Vérifier le typage TypeScript strict (sans émission)
+npm run typecheck
 
-# Installer les dépendances des Cloud Functions
-npm --prefix functions install
-```
+# Exécuter la suite de tests unitaires et composants (Vitest + Testing Library)
+npm test
 
-### 2. Configuration d'environnement
-Copiez le fichier `.env.example` en `.env` :
-```bash
-cp .env.example .env
-```
-Par défaut, `VITE_USE_EMULATORS=true` permet de travailler sans connexion internet avec les émulateurs locaux.
+# Compiler le bundle PWA de production (avec découpage en chunks optimisés)
+npm run build
 
-### 3. Lancer l'Émulateur Suite Firebase (Optionnel pour dev local)
-```bash
+# Validation complète (typecheck + tests + build) — exécutée par la CI GitHub Actions
+npm run validate
+
+# Compiler les Cloud Functions TypeScript
+npm run build:functions
+
+# Démarrer la suite d'émulateurs Firebase (Auth, Firestore, Storage, Functions)
 npm run emulators
 ```
-L'interface de gestion Firebase sera accessible sur `http://localhost:4000`.
-
-### 4. Lancer le Frontend Vite
-```bash
-npm run dev
-```
-L'application s'ouvrira sur `http://localhost:3000`.
 
 ---
 
-## 6. Tests & Validation
+## 🇲🇦 Conformité CNDP (Loi 09-08 — Maroc) & Mise en Production
 
-La suite de tests automatisée vérifie :
-- Le formatage monétaire en Dirhams marocains (MAD)
-- La conformité des numéros de téléphone marocains (+212)
-- Le calcul de l'âge des patients
-- La détection de chevauchement de créneaux dans l'agenda
-- L'intégrité du système dentaire international FDI (32 dents adultes, 20 temporaires)
-- La matrice des permissions RBAC
-
-Lancer les tests en unitaire :
-```bash
-npm test
-```
-
-Lancer la compilation TypeScript et le build Vite de production :
-```bash
-npm run build
-```
-
----
-
-## 7. Déploiement Firebase en Production
-
-1. Connectez-vous à votre compte Firebase :
-   ```bash
-   npx firebase login
-   ```
-2. Associez votre projet Firebase configuré en région `europe-west9` :
-   ```bash
-   npx firebase use <VOTRE_PROJECT_ID>
-   ```
-3. Déployez les règles Firestore, Storage, les Cloud Functions et le Hosting :
-   ```bash
-   npx firebase deploy
+1. **Hébergement Hors du Maroc** : La région Firebase recommandée est `europe-west9` (Paris, ~25-35 ms depuis le Maroc). Conformément aux articles 43 et suivants de la **Loi 09-08**, le transfert de données de santé vers un serveur situé hors du territoire marocain nécessite **une autorisation préalable de transfert auprès de la CNDP** et un avis juridique avant toute exploitation avec de vrais patients.
+2. **Durcissement Production** : Avant de déployer sur Firebase (`npx firebase deploy`), désactivez le sélecteur de démo dans votre `.env` de production :
+   ```env
+   VITE_DEMO_MODE="false"
+   VITE_ENABLE_ROLE_SWITCHER="false"
+   VITE_USE_EMULATORS="false"
    ```
 
 ---
 
-## 8. Roadmap V1 (Post-MVP)
+## 🗺️ Roadmap Communautaire (V1)
 
-- [ ] **Tiers Payant AMO / CNOPS / CNSS** :
-  - Génération de la feuille de soins normalisée marocaine.
-  - Gestion du ticket modérateur et du recouvrement des mutuelles privées (Saham/Sanad, Wafa Assurance, RMA, AXA).
-- [ ] **Gestion de Stock Dentaire** :
-  - Suivi des consommables (composites, anesthésiques, digues, fraises).
-  - Alertes automatiques de date de péremption et seuil de réapprovisionnement.
-- [ ] **Module Laboratoire de Prothèse** :
-  - Bons de commande numériques de prothèses (empreintes, teintes VITA, essayages d'armatures, dates d'essayage).
-  - Facturation mensuelle et suivi des travaux en cours.
-- [ ] **Portail Patient Sécurisé** :
-  - Prise de rendez-vous en ligne avec confirmation SMS/WhatsApp.
-  - Espace de consultation des devis et ordonnances.
-- [ ] **Intelligence Artificielle d'Imagerie** :
-  - Détection assistée des lésions carieuses sur radios panoramiques et rétro-alvéolaires.
+Les contributions de la communauté sont les bienvenues sur ces chantiers (voir [`CONTRIBUTING.md`](./CONTRIBUTING.md)) :
+- [ ] **Tiers Payant & Mutuelles (AMO / CNSS / CNOPS)** : Génération automatique des feuilles de soins mutuelles et suivi des remboursements.
+- [ ] **Gestion de Stock & Traçabilité Stérilisation** : Suivi des lots, dates de péremption des composites/anesthésiques et cycles d'autoclave.
+- [ ] **Suivi Laboratoire de Prothèse** : Bons de commande numériques (teintes VITA, dates d'essayage, facturation prothésiste).
+- [ ] **Portail Patient** : Prise de rendez-vous en ligne et partage sécurisé des devis/ordonnances.
+
+---
+
+## 📄 Licence
+
+Distribué sous licence **MIT**. Voir le fichier [`LICENSE`](./LICENSE) pour plus d'informations.

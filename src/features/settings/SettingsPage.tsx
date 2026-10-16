@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/features/auth/AuthContext';
 import { DEMO_CLINIC } from '@/features/auth/demoData';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,20 +9,16 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogCloseButton } from '@/components/ui/dialog';
 import {
   Building2,
-  Users,
   ShieldCheck,
-  Globe,
   Save,
   CheckCircle2,
   UserPlus,
-  Mail,
-  Phone,
 } from 'lucide-react';
 import { UserProfile, UserRole } from '@/types';
+import { appConfig } from '@/config/app.config';
 
 export const SettingsPage: React.FC = () => {
-  const { t, i18n } = useTranslation();
-  const { user, isDentist } = useAuth();
+  const { t } = useTranslation();
 
   // Clinic profile state
   const [clinicName, setClinicName] = useState(DEMO_CLINIC.name);
@@ -292,25 +287,25 @@ export const SettingsPage: React.FC = () => {
           <Card className="border-slate-200 shadow-sm bg-white">
             <CardHeader className="pb-3 border-b border-slate-100">
               <CardTitle className="text-sm font-bold text-slate-800">
-                Paramètres Régionaux (Maroc)
+                Paramètres Régionaux ({appConfig.regional.defaultCity})
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-3 text-xs">
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Devise Principale</span>
-                <span className="font-bold text-slate-800">Dirham Marocain (MAD)</span>
+                <span className="font-bold text-slate-800">{appConfig.regional.currency}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Fuseau Horaire</span>
-                <span className="font-bold text-slate-800">Africa/Casablanca (UTC+1)</span>
+                <span className="font-bold text-slate-800">{appConfig.regional.timezone}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Format de Date</span>
-                <span className="font-bold text-slate-800">JJ/MM/AAAA</span>
+                <span className="font-bold text-slate-800">JJ/MM/AAAA ({appConfig.regional.locale})</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Indicatif Téléphonique</span>
-                <span className="font-bold text-slate-800">+212 (Maroc)</span>
+                <span className="font-bold text-slate-800">{appConfig.regional.countryDialPrefix}</span>
               </div>
             </CardContent>
           </Card>
@@ -319,15 +314,17 @@ export const SettingsPage: React.FC = () => {
           <div className="p-5 rounded-2xl border border-teal-200 bg-teal-50/70 text-xs space-y-2.5">
             <div className="flex items-center gap-2 font-bold text-teal-900">
               <ShieldCheck className="w-5 h-5 text-teal-600" />
-              <span>Conformité Loi 09-08 & CNDP</span>
+              <span>
+                Conformité {appConfig.regional.regulatoryLaw} & {appConfig.regional.regulatoryAuthority}
+              </span>
             </div>
             <p className="text-slate-600 leading-relaxed">
-              DentaMaroc intègre le principe de minimisation des données, le recueil du consentement éclairé
-              ainsi que le droit à l'oubli et à l'exportabilité de chaque dossier patient.
+              {appConfig.app.name} intègre le principe de minimisation des données, le recueil du consentement éclairé
+              ainsi que le droit à l&apos;oubli et à l&apos;exportabilité de chaque dossier patient.
             </p>
             <p className="text-[11px] text-teal-800 font-medium">
-              * Hébergement cloud en région Paris (europe-west9). Avant toute exploitation avec des patients réels,
-              veillez à déposer une déclaration préalable de transfert auprès de la CNDP.
+              * Hébergement cloud en région ({appConfig.firebase.region}). Avant toute exploitation avec des patients réels,
+              veillez à déposer une déclaration préalable auprès de l&apos;autorité ({appConfig.regional.regulatoryAuthority}).
             </p>
           </div>
         </div>

@@ -4,14 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/features/auth/AuthContext';
-import { formatDateTimeMA, formatDateMA } from '@/lib/date-utils';
+import { formatDateTimeMA } from '@/lib/date-utils';
 import {
   ShieldCheck,
   Download,
   Trash2,
-  Lock,
   History,
-  FileCheck2,
   AlertTriangle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -25,8 +23,7 @@ export const PatientCNDPView: React.FC<PatientCNDPViewProps> = ({ patient, onPat
   const { isDentist, user } = useAuth();
   const navigate = useNavigate();
 
-  const [consentGranted, setConsentGranted] = useState(patient.consent.granted);
-  const [consentTimestamp, setConsentTimestamp] = useState(patient.consent.timestamp);
+  const consentTimestamp = patient.consent.timestamp;
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   // Fictitious audit log for this patient

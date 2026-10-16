@@ -9,35 +9,41 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['tooth.svg'],
       manifest: {
         name: 'DentaMaroc - Gestion Cabinet Dentaire',
         short_name: 'DentaMaroc',
-        description: 'Logiciel médical de gestion de cabinet dentaire au Maroc',
+        description: 'Logiciel médical open-source de gestion de cabinet dentaire',
         theme_color: '#0d9488',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
+            src: 'tooth.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
           },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    })
+        ],
+      },
+    }),
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
+          'vendor-pdf': ['jspdf'],
+          'vendor-i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+        },
+      },
+    },
   },
   server: {
-    port: 3000
-  }
+    port: 3000,
+  },
 });

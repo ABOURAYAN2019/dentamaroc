@@ -6,9 +6,8 @@ import {
   DEMO_PAYMENTS,
   DEMO_CASH_CLOSING,
   DEMO_CLINIC,
-  DEMO_PATIENTS,
 } from '@/features/auth/demoData';
-import { Invoice, Payment, CashClosing, Expense, PaymentMethod } from '@/types';
+import { Invoice, Payment, CashClosing, Expense } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,22 +22,18 @@ import {
   Receipt,
   CreditCard,
   Lock,
-  PlusCircle,
   FileCheck2,
-  DollarSign,
-  AlertCircle,
   TrendingDown,
   Printer,
-  Calendar,
 } from 'lucide-react';
 
 export const BillingPage: React.FC = () => {
   const { t } = useTranslation();
-  const { user, isDentist, isSecretary } = useAuth();
+  const { user } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'invoices' | 'payments' | 'closing' | 'expenses'>('closing');
-  const [invoices, setInvoices] = useState<Invoice[]>(DEMO_INVOICES);
-  const [payments, setPayments] = useState<Payment[]>(DEMO_PAYMENTS);
+  const [invoices] = useState<Invoice[]>(DEMO_INVOICES);
+  const [payments] = useState<Payment[]>(DEMO_PAYMENTS);
 
   // Daily Cash Closing State
   const [cashClosing, setCashClosing] = useState<CashClosing>(DEMO_CASH_CLOSING);

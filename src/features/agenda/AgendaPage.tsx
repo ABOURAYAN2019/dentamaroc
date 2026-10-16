@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/features/auth/AuthContext';
 import {
   DEMO_APPOINTMENTS,
   DEMO_PATIENTS,
   DEMO_CLINIC,
 } from '@/features/auth/demoData';
 import { Appointment, AppointmentStatus } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogCloseButton } from '@/components/ui/dialog';
@@ -17,20 +16,14 @@ import { Input } from '@/components/ui/input';
 import { formatTimeMA, formatDateMA } from '@/lib/date-utils';
 import { formatMoroccanPhone, getWhatsAppReminderLink } from '@/lib/formatters';
 import {
-  Calendar as CalendarIcon,
   Clock,
   Plus,
   MessageCircle,
   AlertTriangle,
-  UserCheck,
-  ChevronLeft,
-  ChevronRight,
-  Filter,
 } from 'lucide-react';
 
 export const AgendaPage: React.FC = () => {
   const { t } = useTranslation();
-  const { isDentist, isAssistant, isSecretary } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [appointments, setAppointments] = useState<Appointment[]>(DEMO_APPOINTMENTS);
